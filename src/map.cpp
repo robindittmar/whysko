@@ -20,7 +20,7 @@ void Map::Setup() {
     }
 }
 
-void Map::RenderBackground(sf::RenderTarget& renderTarget) const {
+void Map::Render(sf::RenderTarget& renderTarget) const {
     for (const auto& tile : backgroundLayer) {
         renderTarget.draw(tile);
     }

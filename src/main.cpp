@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "engine.h"
+#include "view_manager.h"
 
 #include "game_scene.h"
 #include "waiter.h"
@@ -16,6 +17,8 @@ int main() {
     auto& engine = Engine::Instance();
 
     auto window = sf::RenderWindow({1280u, 720u}, "whysko");
+    auto viewManager = ViewManager(window);
+
 
     engine.Initialize();
     engine.SetDrawDebugString(true);
@@ -59,49 +62,15 @@ int main() {
 
     engine.SetScene(scene);
 
-    sf::View oldView;
-    sf::Vector2f clickPosition;
-    bool shiftView = false;
 
     while (window.isOpen()) {
         sf::Event event {};
         if (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
-            } else if (event.type == sf::Event::KeyPressed) {
-            } else if (event.type == sf::Event::KeyReleased) {
-                if (event.key.code == sf::Keyboard::Key::W) {
-                }
-            } else if (event.type == sf::Event::MouseMoved) {
-                if (shiftView) {
-                    auto view = oldView;
-                    sf::Vector2f mousePos = window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y), oldView);
-                    view.move(clickPosition.x - mousePos.x, clickPosition.y - mousePos.y);
-                    window.setView(view);
-                } else {
-                    sf::Vector2f target = window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
-                }
-            } else if (event.type == sf::Event::MouseButtonPressed) {
-//                clickPosition.x = event.mouseButton.x;
-//                clickPosition.y = event.mouseButton.y;
-                clickPosition = window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-                oldView = window.getView();
-
-                shiftView = true;
-            } else if (event.type == sf::Event::MouseButtonReleased) {
-                shiftView = false;
             }
-            else if (event.type == sf::Event::MouseWheelMoved) {
-                auto view = window.getView();
 
-                auto size = view.getSize();
-
-                size.x -= (size.x / 10) * event.mouseWheel.delta;
-                size.y -= (size.y / 10) * event.mouseWheel.delta;
-
-                view.setSize(size);
-                window.setView(view);
-            }
+            viewManager.HandleEvent(event);
         }
 
         engine.Think();

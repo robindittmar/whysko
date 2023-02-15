@@ -12,13 +12,11 @@ void GameScene::Think() {
 }
 
 void GameScene::Render(sf::RenderTarget& renderTarget) {
-    map.RenderBackground(renderTarget);
+    map.Render(renderTarget);
 
     for (const auto& actor : actors) {
         actor->Render(renderTarget);
     }
-
-    map.RenderForeground(renderTarget);
 }
 
 void GameScene::AddActor(const std::shared_ptr<Actor>& actor) {

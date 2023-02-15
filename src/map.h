@@ -17,7 +17,7 @@ public:
 
     void Setup();
 
-    void RenderBackground(sf::RenderTarget& renderTarget) const;
+    void Render(sf::RenderTarget& renderTarget) const;
     void RenderForeground(sf::RenderTarget& renderTarget) const;
 private:
     std::vector<sf::Text> backgroundLayerDebugText;
