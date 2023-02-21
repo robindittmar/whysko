@@ -12,7 +12,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
+set_target_properties(sfml-audio PROPERTIES CXX_STANDARD 98 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
+FETCHCONTENT_MAKEAVAILABLE(json)
+
 add_subdirectory(src)
 
 
-target_link_libraries(whysko sfml-window sfml-graphics)
+target_link_libraries(whysko sfml-window sfml-graphics sfml-audio nlohmann_json::nlohmann_json)

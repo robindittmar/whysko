@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void Actor::Think() {
+void Actor::Think(float delta) {
     if (state == ActorState::Idle) {
         curIntent = this->NextIntent();
         if (curIntent) {
@@ -10,7 +10,7 @@ void Actor::Think() {
     }
 
     if (state == ActorState::Acting) {
-        if (curIntent->Act(*this) == IntentProgress::Complete) {
+        if (curIntent->Act(*this, delta) == IntentProgress::Complete) {
             state = ActorState::Idle;
             curIntent = nullptr;
         }

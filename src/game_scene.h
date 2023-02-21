@@ -13,7 +13,7 @@ class GameScene : public Scene {
 public:
     void Setup();
 
-    void Think() override;
+    void Think(float delta) override;
     void Render(sf::RenderTarget& renderTarget) override;
 
     void AddActor(const std::shared_ptr<Actor>& actor);

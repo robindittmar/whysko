@@ -8,7 +8,7 @@ void WaitIntent::Start(Actor& actor) {
     clock.restart();
 }
 
-IntentProgress WaitIntent::Act(Actor& actor) {
+IntentProgress WaitIntent::Act(Actor& actor, float delta) {
     float elapsed = clock.getElapsedTime().asSeconds();
     if (elapsed > secs) {
         return IntentProgress::Complete;

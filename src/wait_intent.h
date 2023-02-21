@@ -11,7 +11,7 @@ public:
     WaitIntent(float seconds);
 
     void Start(Actor& actor) override;
-    IntentProgress Act(Actor& actor) override;
+    IntentProgress Act(Actor& actor, float delta) override;
 private:
     float secs;
     sf::Clock clock;

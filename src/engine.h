@@ -19,7 +19,7 @@ public:
     bool Shutdown();
 
     void Think();
-    void Tick();
+    void Tick(float delta);
     void Render(sf::RenderTarget& renderTarget);
 
     inline std::shared_ptr<Scene> GetScene() const;
@@ -40,14 +40,20 @@ private:
     void DrawDebugString(sf::RenderTarget& target) const;
 
     uint32_t tickrate = 128;
+    uint64_t ticktime = 1000000 / tickrate;
+    uint64_t ticktimeAccumulator = 0;
+
     uint32_t ticksLastSecond = 0;
     uint32_t ticksCurrentSecond = 0;
 
     uint32_t framesLastSecond = 0;
     uint32_t framesCurrentSecond = 0;
 
+    uint64_t lastFrameTime = 0;
+
     sf::Clock ticksClock;
     sf::Clock secondsClock;
+    sf::Clock frameClock;
 
     bool drawDebugString = false;
 
@@ -79,6 +85,7 @@ uint32_t Engine::GetTickrate() const {
 
 void Engine::SetTickrate(const uint32_t ticks) {
     tickrate = ticks;
+    ticktime = 1000000 / tickrate;
 }
 
 bool Engine::GetDrawDebugString() const {

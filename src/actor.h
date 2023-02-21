@@ -20,7 +20,7 @@ public:
     Actor() = default;
     virtual ~Actor() = default;
 
-    virtual void Think();
+    virtual void Think(float delta);
     virtual void Render(sf::RenderTarget& renderTarget) const;
 
     void PushIntent(const std::shared_ptr<ActorIntent>& intent);

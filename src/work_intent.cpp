@@ -10,12 +10,12 @@ void WorkIntent::Start(Actor& actor) {
     clock.restart();
 }
 
-IntentProgress WorkIntent::Act(Actor& actor) {
+IntentProgress WorkIntent::Act(Actor& actor, float delta) {
     if (clock.getElapsedTime().asSeconds() > durationInSeconds) {
         actor.Sprite().setRotation(startingAngle);
         return IntentProgress::Complete;
     }
 
-    actor.Sprite().rotate(5.0f);
+    actor.Sprite().rotate(25.0f * delta);
     return IntentProgress::InProgress;
 }

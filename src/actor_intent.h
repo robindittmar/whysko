@@ -17,7 +17,7 @@ enum class IntentProgress {
 class ActorIntent {
 public:
     virtual void Start(Actor& actor) = 0;
-    virtual IntentProgress Act(Actor& actor) = 0;
+    virtual IntentProgress Act(Actor& actor, float delta) = 0;
 
     inline uint32_t GetId() const;
     inline void SetId(int _id);

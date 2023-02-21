@@ -13,7 +13,7 @@ public:
     MoveIntent(sf::Vector2<float> vector2);
 
     void Start(Actor& actor) override;
-    IntentProgress Act(Actor& actor) override;
+    IntentProgress Act(Actor& actor, float delta) override;
 private:
     sf::Vector2f target;
     float speed;
