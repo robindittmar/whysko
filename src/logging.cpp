@@ -3,12 +3,12 @@
 
 using json = nlohmann::json;
 
-Logging& Logging::Instance() {
+Logging& Logging::instance() {
     static Logging l;
     return l;
 }
 
-void Logging::Log(const std::string& msg) {
+void Logging::log(const std::string& msg) {
     ofs.open(filename, std::ios::out | std::ios::app);
     if (!ofs) {
         return;

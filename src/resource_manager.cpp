@@ -1,7 +1,7 @@
 #include "resource_manager.h"
 
 
-sf::Texture& ResourceManager::LoadTexture(const std::string& filename) {
+sf::Texture& ResourceManager::loadTexture(const std::string& filename) {
     if (textureCache.find(filename) != textureCache.end()) {
         return textureCache[filename];
     }
@@ -13,7 +13,7 @@ sf::Texture& ResourceManager::LoadTexture(const std::string& filename) {
     return textureCache[filename];
 }
 
-sf::Font& ResourceManager::LoadFont(const std::string& filename) {
+sf::Font& ResourceManager::loadFont(const std::string& filename) {
     if (fontCache.find(filename) != fontCache.end()) {
         return fontCache[filename];
     }

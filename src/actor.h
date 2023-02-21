@@ -20,20 +20,21 @@ public:
     Actor() = default;
     virtual ~Actor() = default;
 
-    virtual void Think(float delta);
-    virtual void Render(sf::RenderTarget& renderTarget) const;
+    virtual void think(float delta);
+    virtual void render(sf::RenderTarget& renderTarget) const;
 
-    void PushIntent(const std::shared_ptr<ActorIntent>& intent);
-    void PushIntents(const std::vector<std::shared_ptr<ActorIntent>>& intents);
+    void pushIntent(const std::shared_ptr<ActorIntent>& intent);
+    void pushIntents(const std::vector<std::shared_ptr<ActorIntent>>& intents);
 
-    inline ActorState GetState() const;
-    inline void SetState(ActorState& s);
+    inline ActorState getState() const;
+    inline void setState(ActorState& s);
 
-    inline sf::Sprite& Sprite();
+    inline sf::Sprite& sprite();
+
 protected:
-    virtual std::shared_ptr<ActorIntent> NextIntent();
+    virtual std::shared_ptr<ActorIntent> nextIntent();
 
-    sf::Sprite sprite;
+    sf::Sprite _sprite;
     ActorState state = ActorState::Idle;
     std::shared_ptr<ActorIntent> curIntent;
     std::queue<std::shared_ptr<ActorIntent>> intentQueue;
@@ -42,17 +43,17 @@ protected:
 };
 
 
-ActorState Actor::GetState() const {
+ActorState Actor::getState() const {
     return state;
 }
 
-void Actor::SetState(ActorState& s) {
+void Actor::setState(ActorState& s) {
     state = s;
 }
 
-sf::Sprite& Actor::Sprite() {
-    return sprite;
+sf::Sprite& Actor::sprite() {
+    return _sprite;
 }
 
 
-#endif //WHYSKO_ACTOR_H
+#endif//WHYSKO_ACTOR_H

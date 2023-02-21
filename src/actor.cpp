@@ -1,37 +1,37 @@
 #include "actor.h"
 
-void Actor::Think(float delta) {
+void Actor::think(float delta) {
     if (state == ActorState::Idle) {
-        curIntent = this->NextIntent();
+        curIntent = this->nextIntent();
         if (curIntent) {
-            curIntent->Start(*this);
+            curIntent->start(*this);
             state = ActorState::Acting;
         }
     }
 
     if (state == ActorState::Acting) {
-        if (curIntent->Act(*this, delta) == IntentProgress::Complete) {
+        if (curIntent->act(*this, delta) == IntentProgress::Complete) {
             state = ActorState::Idle;
             curIntent = nullptr;
         }
     }
 }
 
-void Actor::Render(sf::RenderTarget& renderTarget) const {
-    renderTarget.draw(sprite);
+void Actor::render(sf::RenderTarget& renderTarget) const {
+    renderTarget.draw(_sprite);
 }
 
-void Actor::PushIntent(const std::shared_ptr<ActorIntent>& intent) {
+void Actor::pushIntent(const std::shared_ptr<ActorIntent>& intent) {
     intentQueue.push(intent);
 }
 
-void Actor::PushIntents(const std::vector<std::shared_ptr<ActorIntent>>& intents) {
-    for (auto& intent : intents) {
-        PushIntent(intent);
+void Actor::pushIntents(const std::vector<std::shared_ptr<ActorIntent>>& intents) {
+    for (auto& intent: intents) {
+        pushIntent(intent);
     }
 }
 
-std::shared_ptr<ActorIntent> Actor::NextIntent() {
+std::shared_ptr<ActorIntent> Actor::nextIntent() {
     if (intentQueue.empty()) {
         return nullptr;
     }

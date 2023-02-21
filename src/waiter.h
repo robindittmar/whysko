@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "engine.h"
 #include "actor.h"
+#include "engine.h"
 
 
 class Waiter : public Actor {
@@ -17,4 +17,4 @@ private:
 };
 
 
-#endif //WHYSKO_WAITER_H
+#endif//WHYSKO_WAITER_H

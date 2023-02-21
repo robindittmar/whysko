@@ -5,17 +5,17 @@
 WorkIntent::WorkIntent(float durationInSeconds)
     : durationInSeconds(durationInSeconds) {}
 
-void WorkIntent::Start(Actor& actor) {
-    startingAngle = actor.Sprite().getRotation();
+void WorkIntent::start(Actor& actor) {
+    startingAngle = actor.sprite().getRotation();
     clock.restart();
 }
 
-IntentProgress WorkIntent::Act(Actor& actor, float delta) {
+IntentProgress WorkIntent::act(Actor& actor, float delta) {
     if (clock.getElapsedTime().asSeconds() > durationInSeconds) {
-        actor.Sprite().setRotation(startingAngle);
+        actor.sprite().setRotation(startingAngle);
         return IntentProgress::Complete;
     }
 
-    actor.Sprite().rotate(25.0f * delta);
+    actor.sprite().rotate(25.0f * delta);
     return IntentProgress::InProgress;
 }

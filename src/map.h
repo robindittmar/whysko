@@ -1,8 +1,8 @@
 #ifndef WHYSKO_MAP_H
 #define WHYSKO_MAP_H
 
-#include "SFML/Graphics/VertexArray.hpp"
 #include "SFML/Graphics/Transformable.hpp"
+#include "SFML/Graphics/VertexArray.hpp"
 
 #include "engine.h"
 
@@ -16,14 +16,15 @@ public:
     Map() = default;
     ~Map() override = default;
 
-    void Setup(sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height);
+    void setup(sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height);
 
-    void Render(sf::RenderTarget& renderTarget) const;
+    void render(sf::RenderTarget& renderTarget) const;
+
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     sf::Texture texture;
-    sf::VertexArray vertices;
+    sf::VertexArray bgVertices;
 };
 
-#endif //WHYSKO_MAP_H
+#endif//WHYSKO_MAP_H

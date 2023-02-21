@@ -3,18 +3,16 @@
 #include <cmath>
 
 MoveIntent::MoveIntent(sf::Vector2f moveTo, float speed)
-    : target(moveTo)
-    , speed(speed) {}
+    : target(moveTo), speed(speed) {}
 
-void MoveIntent::Start(Actor& actor) {
-
+void MoveIntent::start(Actor& actor) {
 }
 
-IntentProgress MoveIntent::Act(Actor& actor, float delta) {
+IntentProgress MoveIntent::act(Actor& actor, float delta) {
     IntentProgress rtn = IntentProgress::InProgress;
 
-    float deltaX = (target.x - actor.Sprite().getPosition().x);
-    float deltaY = (target.y - actor.Sprite().getPosition().y);
+    float deltaX = (target.x - actor.sprite().getPosition().x);
+    float deltaY = (target.y - actor.sprite().getPosition().y);
 
     float len = sqrt(deltaX * deltaX + deltaY * deltaY);
 
@@ -25,7 +23,6 @@ IntentProgress MoveIntent::Act(Actor& actor, float delta) {
     float moveX = ((deltaX / len) * speed) * delta;
     float moveY = ((deltaY / len) * speed) * delta;
 
-    actor.Sprite().move(moveX, moveY);
+    actor.sprite().move(moveX, moveY);
     return rtn;
 }
-

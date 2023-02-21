@@ -1,43 +1,44 @@
 #ifndef WHYSKO_ENGINE_H
 #define WHYSKO_ENGINE_H
 
-#include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/Clock.hpp>
 #include <utility>
 
-#include "scene.h"
 #include "resource_manager.h"
+#include "scene.h"
 
 class Engine {
 public:
     Engine(Engine&) = delete;
     Engine(Engine&&) = delete;
 
-    static Engine& Instance();
+    static Engine& instance();
 
-    bool Initialize();
-    bool Shutdown();
+    bool initialize();
+    bool shutdown();
 
-    void Think();
-    void Tick(float delta);
-    void Render(sf::RenderTarget& renderTarget);
+    void think();
+    void tick(float delta);
+    void render(sf::RenderTarget& renderTarget);
 
-    inline std::shared_ptr<Scene> GetScene() const;
-    inline void SetScene(const std::shared_ptr<Scene>& s);
+    inline std::shared_ptr<Scene> getScene() const;
+    inline void setScene(const std::shared_ptr<Scene>& s);
 
-    inline ResourceManager& GetResourceManager();
+    inline ResourceManager& getResourceManager();
 
-    inline uint32_t GetTickrate() const;
-    inline void SetTickrate(uint32_t ticks);
+    inline uint32_t getTickrate() const;
+    inline void setTickrate(uint32_t ticks);
 
-    inline bool GetDrawDebugString() const;
-    inline void SetDrawDebugString(bool draw);
+    inline bool getDrawDebugString() const;
+    inline void setDrawDebugString(bool draw);
+
 private:
     Engine() = default;
     ~Engine() = default;
 
 
-    void DrawDebugString(sf::RenderTarget& target) const;
+    void drawDebugString(sf::RenderTarget& target) const;
 
     uint32_t tickrate = 128;
     uint64_t ticktime = 1000000 / tickrate;
@@ -55,46 +56,46 @@ private:
     sf::Clock secondsClock;
     sf::Clock frameClock;
 
-    bool drawDebugString = false;
+    bool _drawDebugString = false;
 
     sf::Clock startupClock;
 
     ResourceManager resourceManager;
 
-    sf::Font& renderFont = resourceManager.LoadFont("fnt/FiraCode-Regular.ttf");
+    sf::Font& renderFont = resourceManager.loadFont("fnt/FiraCode-Regular.ttf");
 
     std::shared_ptr<Scene> scene = nullptr;
 };
 
 
-std::shared_ptr<Scene> Engine::GetScene() const {
+std::shared_ptr<Scene> Engine::getScene() const {
     return scene;
 }
 
-void Engine::SetScene(const std::shared_ptr<Scene>& s) {
+void Engine::setScene(const std::shared_ptr<Scene>& s) {
     scene = s;
 }
 
-ResourceManager& Engine::GetResourceManager() {
+ResourceManager& Engine::getResourceManager() {
     return resourceManager;
 }
 
-uint32_t Engine::GetTickrate() const {
+uint32_t Engine::getTickrate() const {
     return tickrate;
 }
 
-void Engine::SetTickrate(const uint32_t ticks) {
+void Engine::setTickrate(uint32_t ticks) {
     tickrate = ticks;
     ticktime = 1000000 / tickrate;
 }
 
-bool Engine::GetDrawDebugString() const {
-    return drawDebugString;
+bool Engine::getDrawDebugString() const {
+    return _drawDebugString;
 }
 
-void Engine::SetDrawDebugString(const bool draw) {
-    drawDebugString = draw;
+void Engine::setDrawDebugString(const bool draw) {
+    _drawDebugString = draw;
 }
 
 
-#endif //WHYSKO_ENGINE_H
+#endif//WHYSKO_ENGINE_H

@@ -10,8 +10,9 @@ class WorkIntent : public ActorIntent {
 public:
     WorkIntent(float durationInSeconds);
 
-    void Start(Actor& actor) override;
-    IntentProgress Act(Actor& actor, float delta) override;
+    void start(Actor& actor) override;
+    IntentProgress act(Actor& actor, float delta) override;
+
 private:
     float startingAngle;
     float durationInSeconds;
@@ -19,4 +20,4 @@ private:
 };
 
 
-#endif //WHYSKO_WORK_INTENT_H
+#endif//WHYSKO_WORK_INTENT_H

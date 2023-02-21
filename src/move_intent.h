@@ -12,12 +12,13 @@ public:
 
     MoveIntent(sf::Vector2<float> vector2);
 
-    void Start(Actor& actor) override;
-    IntentProgress Act(Actor& actor, float delta) override;
+    void start(Actor& actor) override;
+    IntentProgress act(Actor& actor, float delta) override;
+
 private:
     sf::Vector2f target;
     float speed;
 };
 
 
-#endif //WHYSKO_MOVE_INTENT_H
+#endif//WHYSKO_MOVE_INTENT_H

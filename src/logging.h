@@ -9,9 +9,10 @@
 
 class Logging {
 public:
-    static Logging& Instance();
+    static Logging& instance();
 
-    void Log(const std::string& msg);
+    void log(const std::string& msg);
+
 private:
     Logging() = default;
     ~Logging() = default;
@@ -23,4 +24,4 @@ private:
 };
 
 
-#endif //WHYSKO_LOGGING_H
+#endif//WHYSKO_LOGGING_H

@@ -6,9 +6,9 @@
 
 class Scene {
 public:
-    virtual void Think(float delta) = 0;
-    virtual void Render(sf::RenderTarget& renderTarget) = 0;
+    virtual void think(float delta) = 0;
+    virtual void render(sf::RenderTarget& renderTarget) = 0;
 };
 
 
-#endif //WHYSKO_SCENE_H
+#endif//WHYSKO_SCENE_H

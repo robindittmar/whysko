@@ -8,14 +8,15 @@
 
 class WaitIntent : public ActorIntent {
 public:
-    WaitIntent(float seconds);
+    explicit WaitIntent(float seconds);
 
-    void Start(Actor& actor) override;
-    IntentProgress Act(Actor& actor, float delta) override;
+    void start(Actor& actor) override;
+    IntentProgress act(Actor& actor, float delta) override;
+
 private:
     float secs;
     sf::Clock clock;
 };
 
 
-#endif //WHYSKO_WAIT_INTENT_H
+#endif//WHYSKO_WAIT_INTENT_H

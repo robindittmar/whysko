@@ -2,11 +2,11 @@
 #include "SFML/Graphics/Text.hpp"
 
 
-void Map::Setup(sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height) {
-    texture = Engine::Instance().GetResourceManager().LoadTexture("img/graphics-vertex-array-tilemap-tileset.png");
+void Map::setup(sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height) {
+    texture = Engine::instance().getResourceManager().loadTexture("img/graphics-vertex-array-tilemap-tileset.png");
 
-    vertices.setPrimitiveType(sf::Quads);
-    vertices.resize(width * height * 4);
+    bgVertices.setPrimitiveType(sf::Quads);
+    bgVertices.resize(width * height * 4);
 
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
@@ -15,10 +15,10 @@ void Map::Setup(sf::Vector2u tileSize, const int* tiles, unsigned int width, uns
             int tu = tileNumber % (texture.getSize().x / tileSize.x);
             int tv = tileNumber / (texture.getSize().x / tileSize.x);
 
-            sf::Vertex* quad = &vertices[(i + j * width) * 4];
+            sf::Vertex* quad = &bgVertices[(i + j * width) * 4];
 
             quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
-            quad[1].position = sf::Vector2f((i + 1) * tileSize.x,  j * tileSize.y);
+            quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
             quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
             quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
 
@@ -30,13 +30,13 @@ void Map::Setup(sf::Vector2u tileSize, const int* tiles, unsigned int width, uns
     }
 }
 
-void Map::Render(sf::RenderTarget& renderTarget) const {
-//    for (const auto& tile : backgroundLayer) {
-//        renderTarget.draw(tile);
-//    }
-//    for (const auto& tileDebug : backgroundLayerDebugText) {
-//        renderTarget.draw(tileDebug);
-//    }
+void Map::render(sf::RenderTarget& renderTarget) const {
+    //    for (const auto& tile : backgroundLayer) {
+    //        renderTarget.draw(tile);
+    //    }
+    //    for (const auto& tileDebug : backgroundLayerDebugText) {
+    //        renderTarget.draw(tileDebug);
+    //    }
 }
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -44,6 +44,5 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
     states.texture = &texture;
 
-    target.draw(vertices, states);
+    target.draw(bgVertices, states);
 }
-

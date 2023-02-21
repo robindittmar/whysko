@@ -9,13 +9,14 @@ public:
     explicit ViewManager(sf::RenderWindow& wnd);
     ~ViewManager() = default;
 
-    void HandleEvent(sf::Event& event);
+    void handleEvent(sf::Event& event);
 
-    void StartDragging(int x, int y);
-    void Drag(int x, int y);
-    void StopDragging();
+    void startDragging(int x, int y);
+    void drag(int x, int y);
+    void stopDragging();
 
-    void Zoom(int delta);
+    void zoom(int delta);
+
 private:
     sf::RenderWindow& window;
     sf::View previousView;
@@ -25,4 +26,4 @@ private:
 };
 
 
-#endif //WHYSKO_VIEW_MANAGER_H
+#endif//WHYSKO_VIEW_MANAGER_H
