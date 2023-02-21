@@ -51,8 +51,8 @@ void ViewManager::zoom(int delta) {
     auto view = window.getView();
     auto size = view.getSize();
 
-    size.x -= (size.x / 10) * (float)delta;
-    size.y -= (size.y / 10) * (float)delta;
+    size.x *= 1 - ((float)delta / 12);
+    size.y *= 1 - ((float)delta / 12);
 
     view.setSize(size);
     window.setView(view);

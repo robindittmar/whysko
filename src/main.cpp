@@ -23,6 +23,8 @@ int main() {
     auto window = sf::RenderWindow({1280u, 720u}, "whysko");
     auto viewManager = ViewManager(window);
 
+    window.setFramerateLimit(300);
+
     logging.log("Initializing engine");
     engine.initialize();
     engine.setDrawDebugString(true);
@@ -64,7 +66,7 @@ int main() {
 
     auto backgroundMsc = sf::Music();
     backgroundMsc.openFromFile("snd/track.wav");
-    backgroundMsc.play();
+    //    backgroundMsc.play();
 
     while (window.isOpen()) {
         sf::Event event{};
