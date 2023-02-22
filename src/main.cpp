@@ -27,18 +27,18 @@ int main() {
     engine.initialize();
     engine.setDrawDebugString(true);
 
-    auto waiter = std::make_shared<Waiter>(1, 100.0f, 100.0f, "img/cat.png");
-    auto canna = std::make_shared<Waiter>(2, 500.0f, 500.0f, "img/canna.png");
+    auto waiter0 = std::make_shared<Waiter>(1, 100.0f, 100.0f, "img/cat.png");
+    auto waiter1 = std::make_shared<Waiter>(2, 500.0f, 500.0f, "img/cat.png");
     auto waiter2 = std::make_shared<Waiter>(3, 500.0f, 500.0f, "img/cat2.png");
-    auto lena = std::make_shared<Waiter>(4, 300.0f, 300.0f, "img/cat2.png");
+    auto waiter3 = std::make_shared<Waiter>(4, 300.0f, 300.0f, "img/cat2.png");
 
-    waiter->pushIntents({std::make_shared<WaitIntent>(10.0f),
-                         std::make_shared<WorkIntent>(1.0f),
-                         std::make_shared<MoveIntent>(sf::Vector2f(1900.0f, 1900.0f), 25.0f),
-                         std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 25.0f),
-                         std::make_shared<WorkIntent>(5.0f)});
+    waiter0->pushIntents({std::make_shared<WaitIntent>(10.0f),
+                          std::make_shared<WorkIntent>(1.0f),
+                          std::make_shared<MoveIntent>(sf::Vector2f(1900.0f, 1900.0f), 25.0f),
+                          std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 25.0f),
+                          std::make_shared<WorkIntent>(5.0f)});
 
-    canna->pushIntents({
+    waiter1->pushIntents({
             std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 10.0f),
             std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 1900.0f), 50.0f),
             std::make_shared<MoveIntent>(sf::Vector2f(1900.0f, 1900.0f), 30.0f),
@@ -55,16 +55,16 @@ int main() {
                           std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 1000.0f),
                           std::make_shared<WorkIntent>(30.0f)});
 
-    lena->pushIntents({std::make_shared<MoveIntent>(sf::Vector2f(1000.0f, 300.0f), 150.0f),
-                       std::make_shared<MoveIntent>(sf::Vector2f(1000.0f, 900.0f), 150.0f),
-                       std::make_shared<MoveIntent>(sf::Vector2f(1800.0f, 1800.0f), 150.0f),
-                       std::make_shared<MoveIntent>(sf::Vector2f(10000.0f, 10000.0f), 1000.0f)});
+    waiter3->pushIntents({std::make_shared<MoveIntent>(sf::Vector2f(1000.0f, 300.0f), 150.0f),
+                          std::make_shared<MoveIntent>(sf::Vector2f(1000.0f, 900.0f), 150.0f),
+                          std::make_shared<MoveIntent>(sf::Vector2f(1800.0f, 1800.0f), 150.0f),
+                          std::make_shared<MoveIntent>(sf::Vector2f(10000.0f, 10000.0f), 1000.0f)});
 
     auto scene = std::make_shared<GameScene>();
-    scene->addActor(waiter);
-    scene->addActor(canna);
+    scene->addActor(waiter0);
+    scene->addActor(waiter1);
     scene->addActor(waiter2);
-    scene->addActor(lena);
+    scene->addActor(waiter3);
     scene->setup();
 
     engine.setScene(scene);
