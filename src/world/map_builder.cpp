@@ -1,18 +1,38 @@
-#include "map_loader.h"
-#include "logging.h"
+#include "map_builder.h"
+#include "map.h"
+
+#include "../engine/logging.h"
+#include "nlohmann/json.hpp"
 #include <fstream>
-#include <nlohmann/json.hpp>
 #include <sstream>
 
 using json = nlohmann::json;
 
-void MapLoader::loadFromFile(const std::string& file) {
+Map MapBuilder::build() {
+    Map map;
+    map.setup(tileMap);
+    map.pushTiles(tiles);
+    map.buildMesh();
+    return map;
+}
+
+MapBuilder& MapBuilder::setTileMap(const std::string& tilemap) {
+    tileMap = tilemap;
+    return *this;
+}
+
+MapBuilder& MapBuilder::setTiles(const std::vector<MapTile>& tilesVector) {
+    tiles = tilesVector;
+    return *this;
+}
+
+MapBuilder& MapBuilder::loadFromFile(const std::string& filename) {
     auto& logging = Logging::instance();
     sf::Clock perfTimer;
 
-    std::ifstream ifs(file);
+    std::ifstream ifs(filename);
     if (!ifs.is_open()) {
-        return;
+        return *this;
     }
 
     std::stringstream buffer;
@@ -21,11 +41,13 @@ void MapLoader::loadFromFile(const std::string& file) {
     loadFromJson(buffer.str());
 
     std::stringstream ss;
-    ss << "Loaded map " << file << " in " << perfTimer.getElapsedTime().asMilliseconds() << " ms";
+    ss << "Loaded map " << filename << " in " << perfTimer.getElapsedTime().asMilliseconds() << " ms";
     logging.log(ss.str());
+
+    return *this;
 }
 
-void MapLoader::loadFromJson(const std::string& mapAsJson) {
+MapBuilder& MapBuilder::loadFromJson(const std::string& mapAsJson) {
     auto map = json::parse(mapAsJson);
 
     std::map<std::string, sf::FloatRect> textureDict;
@@ -47,10 +69,6 @@ void MapLoader::loadFromJson(const std::string& mapAsJson) {
                               tile["y1"]),
                 textureDict[tile["texture"]]);
     }
-}
 
-void MapLoader::apply(Map& map) const {
-    map.setup(tileMap);
-    map.pushTiles(tiles);
-    map.buildMesh();
+    return *this;
 }

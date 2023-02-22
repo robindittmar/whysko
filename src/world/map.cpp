@@ -21,15 +21,6 @@ void Map::buildMesh() {
     }
 }
 
-void Map::render(sf::RenderTarget& renderTarget) const {
-    //    for (const auto& tile : backgroundLayer) {
-    //        renderTarget.draw(tile);
-    //    }
-    //    for (const auto& tileDebug : backgroundLayerDebugText) {
-    //        renderTarget.draw(tileDebug);
-    //    }
-}
-
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
 

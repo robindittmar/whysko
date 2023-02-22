@@ -1,10 +1,10 @@
 #include "game_scene.h"
-#include "map_loader.h"
+#include "../world/map_builder.h"
 
 void GameScene::setup() {
-    MapLoader loader;
-    loader.loadFromFile("map/0.json");
-    loader.apply(map);
+    map = MapBuilder()
+                  .loadFromFile("map/0.json")
+                  .build();
 }
 
 void GameScene::think(float delta) {

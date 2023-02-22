@@ -1,7 +1,7 @@
 #ifndef WHYSKO_SCENE_H
 #define WHYSKO_SCENE_H
 
-#include <SFML/Graphics/RenderTarget.hpp>
+#include "SFML/Graphics/RenderTarget.hpp"
 
 
 class Scene {

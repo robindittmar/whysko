@@ -1,15 +1,13 @@
-#include <iostream>
+#include "engine/logging.h"
 
-#include "logging.h"
+#include "engine/engine.h"
+#include "engine/view_manager.h"
 
-#include "engine.h"
-#include "view_manager.h"
-
-#include "game_scene.h"
-#include "move_intent.h"
-#include "wait_intent.h"
-#include "waiter.h"
-#include "work_intent.h"
+#include "actors/move_intent.h"
+#include "actors/wait_intent.h"
+#include "actors/waiter.h"
+#include "actors/work_intent.h"
+#include "scenes/game_scene.h"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -32,6 +30,7 @@ int main() {
     auto waiter = std::make_shared<Waiter>(1, 100.0f, 100.0f, "img/cat.png");
     auto canna = std::make_shared<Waiter>(2, 500.0f, 500.0f, "img/canna.png");
     auto waiter2 = std::make_shared<Waiter>(3, 500.0f, 500.0f, "img/cat2.png");
+    auto lena = std::make_shared<Waiter>(4, 300.0f, 300.0f, "img/cat2.png");
 
     waiter->pushIntents({std::make_shared<WaitIntent>(10.0f),
                          std::make_shared<WorkIntent>(1.0f),
@@ -56,10 +55,16 @@ int main() {
                           std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 1000.0f),
                           std::make_shared<WorkIntent>(30.0f)});
 
+    lena->pushIntents({std::make_shared<MoveIntent>(sf::Vector2f(1000.0f, 300.0f), 150.0f),
+                       std::make_shared<MoveIntent>(sf::Vector2f(1000.0f, 900.0f), 150.0f),
+                       std::make_shared<MoveIntent>(sf::Vector2f(1800.0f, 1800.0f), 150.0f),
+                       std::make_shared<MoveIntent>(sf::Vector2f(10000.0f, 10000.0f), 1000.0f)});
+
     auto scene = std::make_shared<GameScene>();
     scene->addActor(waiter);
     scene->addActor(canna);
     scene->addActor(waiter2);
+    scene->addActor(lena);
     scene->setup();
 
     engine.setScene(scene);

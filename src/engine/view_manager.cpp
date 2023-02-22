@@ -1,5 +1,5 @@
 #include "view_manager.h"
-#include <SFML/Window/Event.hpp>
+#include "SFML/Window/Event.hpp"
 
 
 ViewManager::ViewManager(sf::RenderWindow& wnd)
@@ -51,8 +51,8 @@ void ViewManager::zoom(int delta) {
     auto view = window.getView();
     auto size = view.getSize();
 
-    size.x *= 1 - ((float)delta / 12);
-    size.y *= 1 - ((float)delta / 12);
+    size.x *= 1 - ((float)delta / 12.f);
+    size.y *= 1 - ((float)delta / 12.f);
 
     view.setSize(size);
     window.setView(view);

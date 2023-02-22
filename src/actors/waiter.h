@@ -1,10 +1,10 @@
 #ifndef WHYSKO_WAITER_H
 #define WHYSKO_WAITER_H
 
-#include <SFML/Graphics/Sprite.hpp>
+#include "SFML/Graphics/Sprite.hpp"
 
+#include "../engine/engine.h"
 #include "actor.h"
-#include "engine.h"
 
 
 class Waiter : public Actor {

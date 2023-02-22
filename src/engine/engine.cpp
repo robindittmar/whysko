@@ -26,19 +26,6 @@ void Engine::think() {
 
         ticktimeAccumulator -= ticktime;
     }
-    //    uint32_t ticksToRun = (ticksClock.getElapsedTime().asMicroseconds()) / (1000000 / tickrate);
-    //    if (ticksToRun > 0) {
-    //        for (uint32_t tick = 0; tick < ticksToRun; tick++) {
-    //            Engine::tick(ticksClock.getElapsedTime().asSeconds());
-    //            ticksCurrentSecond++;
-    //        }
-    //
-    //        ticksClock.restart();
-    //    }
-    //    if ((ticksClock.getElapsedTime().asMicroseconds()) > (1000000 / tickrate)) {
-    //        Engine::tick(ticksClock.restart().asSeconds());
-    //        ticksCurrentSecond++;
-    //    }
 
     if (secondsClock.getElapsedTime().asMicroseconds() > 1000000) {
         ticksLastSecond = ticksCurrentSecond;

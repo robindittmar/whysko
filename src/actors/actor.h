@@ -6,8 +6,8 @@
 #include <memory>
 #include <queue>
 
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/Sprite.hpp>
+#include "SFML/Graphics/RenderTarget.hpp"
+#include "SFML/Graphics/Sprite.hpp"
 
 
 enum class ActorState {

@@ -16,7 +16,7 @@ set_target_properties(sfml-audio PROPERTIES CXX_STANDARD 98 CXX_STANDARD_REQUIRE
 
 
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
-FETCHCONTENT_MAKEAVAILABLE(json)
+FetchContent_MakeAvailable(json)
 
 add_subdirectory(src)
 

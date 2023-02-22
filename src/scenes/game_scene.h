@@ -4,8 +4,8 @@
 #include <memory>
 #include <vector>
 
-#include "actor.h"
-#include "map.h"
+#include "../actors/actor.h"
+#include "../world/map.h"
 #include "scene.h"
 
 

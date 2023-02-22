@@ -1,8 +1,8 @@
 #ifndef WHYSKO_MAP_TILE_H
 #define WHYSKO_MAP_TILE_H
 
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/Vertex.hpp>
+#include "SFML/Graphics/Rect.hpp"
+#include "SFML/Graphics/Vertex.hpp"
 
 
 class MapTile {

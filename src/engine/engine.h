@@ -1,12 +1,12 @@
 #ifndef WHYSKO_ENGINE_H
 #define WHYSKO_ENGINE_H
 
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/System/Clock.hpp>
+#include "SFML/Graphics/RenderTarget.hpp"
+#include "SFML/System/Clock.hpp"
 #include <utility>
 
+#include "../scenes/scene.h"
 #include "resource_manager.h"
-#include "scene.h"
 
 class Engine {
 public:

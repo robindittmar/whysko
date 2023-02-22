@@ -3,7 +3,7 @@
 
 #include "actor_intent.h"
 
-#include <SFML/System/Vector2.hpp>
+#include "SFML/System/Vector2.hpp"
 
 
 class MoveIntent : public ActorIntent {

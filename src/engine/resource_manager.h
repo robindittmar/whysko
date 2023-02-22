@@ -3,8 +3,8 @@
 
 #include <unordered_map>
 
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Texture.hpp>
+#include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/Texture.hpp"
 
 using TextureCache = std::unordered_map<std::string, sf::Texture>;
 using FontCache = std::unordered_map<std::string, sf::Font>;

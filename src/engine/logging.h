@@ -1,7 +1,7 @@
 #ifndef WHYSKO_LOGGING_H
 #define WHYSKO_LOGGING_H
 
-#include <nlohmann/json.hpp>
+#include "nlohmann/json.hpp"
 
 #include <ctime>
 #include <fstream>
