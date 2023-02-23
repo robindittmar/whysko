@@ -5,12 +5,12 @@
 
 #include "SFML/System/Vector2.hpp"
 
+#define ACTOR_INTENT_MOVE 11
+
 
 class MoveIntent : public ActorIntent {
 public:
     MoveIntent(sf::Vector2f moveTo, float speed);
-
-    MoveIntent(sf::Vector2<float> vector2);
 
     void start(Actor& actor) override;
     IntentProgress act(Actor& actor, float delta) override;

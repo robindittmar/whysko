@@ -3,7 +3,7 @@
 #include <cmath>
 
 MoveIntent::MoveIntent(sf::Vector2f moveTo, float speed)
-    : target(moveTo), speed(speed) {}
+    : ActorIntent(ACTOR_INTENT_MOVE), target(moveTo), speed(speed) {}
 
 void MoveIntent::start(Actor& actor) {
 }

@@ -5,6 +5,8 @@
 
 #include "SFML/System/Clock.hpp"
 
+#define ACTOR_INTENT_WAIT 10
+
 
 class WaitIntent : public ActorIntent {
 public:

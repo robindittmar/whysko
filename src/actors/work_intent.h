@@ -5,10 +5,12 @@
 
 #include "SFML/System/Clock.hpp"
 
+#define ACTOR_INTENT_WORK 12
+
 
 class WorkIntent : public ActorIntent {
 public:
-    WorkIntent(float durationInSeconds);
+    explicit WorkIntent(float durationInSeconds);
 
     void start(Actor& actor) override;
     IntentProgress act(Actor& actor, float delta) override;

@@ -6,6 +6,9 @@
 
 class Scene {
 public:
+    Scene() = default;
+    virtual ~Scene() = default;
+
     virtual void think(float delta) = 0;
     virtual void render(sf::RenderTarget& renderTarget) = 0;
 };

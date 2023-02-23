@@ -2,7 +2,7 @@
 
 
 WaitIntent::WaitIntent(float seconds)
-    : secs(seconds) {}
+    : ActorIntent(ACTOR_INTENT_WAIT), secs(seconds) {}
 
 void WaitIntent::start(Actor& actor) {
     clock.restart();
