@@ -26,7 +26,7 @@ void Actor::pushIntent(const std::shared_ptr<ActorIntent>& intent) {
 }
 
 void Actor::pushIntents(const std::vector<std::shared_ptr<ActorIntent>>& intents) {
-    for (auto& intent: intents) {
+    for (auto& intent : intents) {
         pushIntent(intent);
     }
 }

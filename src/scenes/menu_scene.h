@@ -8,7 +8,7 @@ class MenuScene : public Scene {
 public:
     void think(float delta) override;
     void render(sf::RenderTarget& renderTarget) override;
-    
+
 private:
 };
 

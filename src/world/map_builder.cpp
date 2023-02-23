@@ -53,21 +53,21 @@ MapBuilder& MapBuilder::loadFromJson(const std::string& mapAsJson) {
     std::map<std::string, sf::FloatRect> textureDict;
 
     tileMap = map["background"]["tile-map"];
-    for (const auto& texture: map["background"]["textures"]) {
+    for (const auto& texture : map["background"]["textures"]) {
         textureDict[texture["id"]] = sf::FloatRect(
-                texture["x0"],
-                texture["y0"],
-                texture["x1"],
-                texture["y1"]);
+            texture["x0"],
+            texture["y0"],
+            texture["x1"],
+            texture["y1"]);
     }
 
-    for (const auto& tile: map["background"]["tiles"]) {
+    for (const auto& tile : map["background"]["tiles"]) {
         tiles.emplace_back(
-                sf::FloatRect(tile["x0"],
-                              tile["y0"],
-                              tile["x1"],
-                              tile["y1"]),
-                textureDict[tile["texture"]]);
+            sf::FloatRect(tile["x0"],
+                          tile["y0"],
+                          tile["x1"],
+                          tile["y1"]),
+            textureDict[tile["texture"]]);
     }
 
     return *this;

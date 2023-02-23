@@ -69,9 +69,9 @@ void Engine::render(sf::RenderTarget& renderTarget) {
 void Engine::drawDebugString(sf::RenderTarget& target) const {
     if (_drawDebugString) {
         sf::Text text(std::string("fps: ") +
-                              std::to_string(framesLastSecond) +
-                              std::string(" / tickrate: ") +
-                              std::to_string(ticksLastSecond),
+                          std::to_string(framesLastSecond) +
+                          std::string(" / tickrate: ") +
+                          std::to_string(ticksLastSecond),
                       renderFont, 16);
 
         text.setPosition(0.0f, 0.0f);

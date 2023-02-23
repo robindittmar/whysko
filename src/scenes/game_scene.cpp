@@ -3,12 +3,12 @@
 
 void GameScene::setup() {
     map = MapBuilder()
-                  .loadFromFile("map/0.json")
-                  .build();
+              .loadFromFile("map/0.json")
+              .build();
 }
 
 void GameScene::think(float delta) {
-    for (auto& actor: actors) {
+    for (auto& actor : actors) {
         actor->think(delta);
     }
 }
@@ -16,7 +16,7 @@ void GameScene::think(float delta) {
 void GameScene::render(sf::RenderTarget& renderTarget) {
     renderTarget.draw(map);
 
-    for (const auto& actor: actors) {
+    for (const auto& actor : actors) {
         actor->render(renderTarget);
     }
 }

@@ -39,11 +39,11 @@ int main() {
                           std::make_shared<WorkIntent>(5.0f)});
 
     waiter1->pushIntents({
-            std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 10.0f),
-            std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 1900.0f), 50.0f),
-            std::make_shared<MoveIntent>(sf::Vector2f(1900.0f, 1900.0f), 30.0f),
-            std::make_shared<MoveIntent>(sf::Vector2f(1900.0f, 100.0f), 25.0f),
-            std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 40.0f),
+        std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 10.0f),
+        std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 1900.0f), 50.0f),
+        std::make_shared<MoveIntent>(sf::Vector2f(1900.0f, 1900.0f), 30.0f),
+        std::make_shared<MoveIntent>(sf::Vector2f(1900.0f, 100.0f), 25.0f),
+        std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 40.0f),
     });
 
     waiter2->pushIntents({std::make_shared<MoveIntent>(sf::Vector2f(100.0f, 100.0f), 250.0f),
