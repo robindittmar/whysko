@@ -44,7 +44,7 @@ void Player::handleEvent(sf::Event& event) {
 }
 
 void Player::think(float delta) {
-    sf::Vector2f desiredVelocity;
+    sf::Vector2f desiredVelocity = {0.f, 0.f};
     float speed = 170.0f;
 
     if (interactPressed) {
@@ -60,18 +60,27 @@ void Player::think(float delta) {
             speed *= 1.7f;
         }
         if (moveUpPressed) {
-            desiredVelocity.y -= speed * delta;
+            desiredVelocity.y -= speed;
         }
         if (moveDownPressed) {
-            desiredVelocity.y += speed * delta;
+            desiredVelocity.y += speed;
         }
         if (moveLeftPressed) {
-            desiredVelocity.x -= speed * delta;
+            desiredVelocity.x -= speed;
         }
         if (moveRightPressed) {
-            desiredVelocity.x += speed * delta;
+            desiredVelocity.x += speed;
+        }
+
+        float len = sqrt(desiredVelocity.x * desiredVelocity.x + desiredVelocity.y * desiredVelocity.y);
+        if (len > 0) {
+            desiredVelocity.x *= std::abs(desiredVelocity.x / len);
+            desiredVelocity.y *= std::abs(desiredVelocity.y / len);
+
+            desiredVelocity.x *= delta;
+            desiredVelocity.y *= delta;
+
+            _sprite.move(desiredVelocity);
         }
     }
-
-    _sprite.move(desiredVelocity);
 }
