@@ -30,18 +30,7 @@ void Engine::think() {
     if (secondsClock.getElapsedTime().asMicroseconds() > 1000000) {
         ticksLastSecond = ticksCurrentSecond;
         ticksCurrentSecond = 0;
-
-        if (ticksLastSecond < tickrate) {
-            std::stringstream ss;
-            ss << "Cannot keep up, last second only had " << ticksLastSecond << " / " << tickrate << " ticks";
-            Logging::instance().log(ss.str());
-        }
-        if (ticksLastSecond > tickrate) {
-            std::stringstream ss;
-            ss << "Too many ticks last second: " << ticksLastSecond << " / " << tickrate << " ticks";
-            Logging::instance().log(ss.str());
-        }
-
+        
         framesLastSecond = framesCurrentSecond;
         framesCurrentSecond = 0;
 
