@@ -5,8 +5,6 @@
 
 #include "SFML/System/Clock.hpp"
 
-#define ACTOR_INTENT_WORK 12
-
 
 class WorkIntent : public ActorIntent {
 public:

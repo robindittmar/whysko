@@ -4,6 +4,7 @@
 #include "engine/view_manager.h"
 
 #include "actors/move_intent.h"
+#include "actors/player.h"
 #include "actors/wait_intent.h"
 #include "actors/waiter.h"
 #include "actors/work_intent.h"
@@ -27,6 +28,7 @@ int main() {
     engine.initialize();
     engine.setDrawDebugString(true);
 
+    auto player = std::make_shared<Player>();
     auto waiter0 = std::make_shared<Waiter>(1, 100.0f, 100.0f, "img/cat.png");
     auto waiter1 = std::make_shared<Waiter>(2, 500.0f, 500.0f, "img/cat.png");
     auto waiter2 = std::make_shared<Waiter>(3, 500.0f, 500.0f, "img/cat2.png");
@@ -67,6 +69,7 @@ int main() {
     });
 
     auto scene = std::make_shared<GameScene>();
+    scene->addActor(player);
     scene->addActor(waiter0);
     scene->addActor(waiter1);
     scene->addActor(waiter2);
@@ -86,6 +89,7 @@ int main() {
                 window.close();
             }
 
+            player->handleEvent(event);
             viewManager.handleEvent(event);
         }
 

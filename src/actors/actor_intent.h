@@ -1,10 +1,9 @@
 #ifndef WHYSKO_ACTOR_INTENT_H
 #define WHYSKO_ACTOR_INTENT_H
 
+#include "intent_ids.h"
 #include <cstdint>
 
-
-#define ACTOR_INTENT_UNDEFINED 0
 
 class Actor;
 

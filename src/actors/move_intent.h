@@ -5,8 +5,6 @@
 
 #include "SFML/System/Vector2.hpp"
 
-#define ACTOR_INTENT_MOVE 11
-
 
 class MoveIntent : public ActorIntent {
 public:
