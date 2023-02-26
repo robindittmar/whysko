@@ -1,6 +1,7 @@
 #include "engine/logging.h"
 
 #include "engine/engine.h"
+#include "engine/input_manager.h"
 #include "engine/view_manager.h"
 
 #include "actors/move_intent.h"
@@ -18,6 +19,7 @@
 int main() {
     auto& logging = Logging::instance();
     auto& engine = Engine::instance();
+    auto& inputManager = InputManager::instance();
 
     auto window = sf::RenderWindow({1280u, 720u}, "whysko");
     auto viewManager = ViewManager(window);
@@ -89,7 +91,7 @@ int main() {
                 window.close();
             }
 
-            player->handleEvent(event);
+            inputManager.handleEvent(event);
             viewManager.handleEvent(event);
         }
 

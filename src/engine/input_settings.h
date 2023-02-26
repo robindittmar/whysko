@@ -1,11 +1,12 @@
-#ifndef WHYSKO_PLAYER_SETTINGS_H
-#define WHYSKO_PLAYER_SETTINGS_H
+#ifndef WHYSKO_INPUT_SETTINGS_H
+#define WHYSKO_INPUT_SETTINGS_H
 
 #include <SFML/Window/Keyboard.hpp>
 
-class PlayerSettings {
+
+class InputSettings {
 public:
-    static PlayerSettings& instance();
+    static InputSettings& instance();
 
     sf::Keyboard::Key keyMoveUp = sf::Keyboard::Key::W;
     sf::Keyboard::Key keyMoveDown = sf::Keyboard::Key::S;
@@ -15,9 +16,9 @@ public:
     sf::Keyboard::Key keyMod = sf::Keyboard::Key::LShift;
 
 private:
-    PlayerSettings() = default;
-    ~PlayerSettings() = default;
+    InputSettings() = default;
+    ~InputSettings() = default;
 };
 
 
-#endif//WHYSKO_PLAYER_SETTINGS_H
+#endif//WHYSKO_INPUT_SETTINGS_H

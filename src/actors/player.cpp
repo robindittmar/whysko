@@ -1,5 +1,6 @@
 #include "player.h"
-#include "../engine/player_settings.h"
+#include "../engine/engine.h"
+#include "../engine/input_manager.h"
 #include "work_intent.h"
 
 Player::Player() {
@@ -9,45 +10,12 @@ Player::Player() {
     _sprite.setScale(5.0f, 5.0f);
 }
 
-void Player::handleEvent(sf::Event& event) {
-    PlayerSettings& settings = PlayerSettings::instance();
-
-    if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == settings.keyMoveUp) {
-            moveUpPressed = true;
-        } else if (event.key.code == settings.keyMoveDown) {
-            moveDownPressed = true;
-        } else if (event.key.code == settings.keyMoveLeft) {
-            moveLeftPressed = true;
-        } else if (event.key.code == settings.keyMoveRight) {
-            moveRightPressed = true;
-        } else if (event.key.code == settings.keyInteract) {
-            interactPressed = true;
-        } else if (event.key.code == settings.keyMod) {
-            modPressed = true;
-        }
-    } else if (event.type == sf::Event::KeyReleased) {
-        if (event.key.code == settings.keyMoveUp) {
-            moveUpPressed = false;
-        } else if (event.key.code == settings.keyMoveDown) {
-            moveDownPressed = false;
-        } else if (event.key.code == settings.keyMoveLeft) {
-            moveLeftPressed = false;
-        } else if (event.key.code == settings.keyMoveRight) {
-            moveRightPressed = false;
-        } else if (event.key.code == settings.keyInteract) {
-            interactPressed = false;
-        } else if (event.key.code == settings.keyMod) {
-            modPressed = false;
-        }
-    }
-}
-
 void Player::think(float delta) {
     sf::Vector2f desiredVelocity = {0.f, 0.f};
     float speed = 170.0f;
+    auto& inputManager = InputManager::instance();
 
-    if (interactPressed) {
+    if (inputManager.interact()) {
         if (curIntent && curIntent->getId() == ACTOR_INTENT_WORK) {
             Actor::think(delta);
         } else {
@@ -56,19 +24,19 @@ void Player::think(float delta) {
         }
 
     } else {
-        if (modPressed) {
+        if (inputManager.modifier()) {
             speed *= 1.7f;
         }
-        if (moveUpPressed) {
+        if (inputManager.moveUp()) {
             desiredVelocity.y -= speed;
         }
-        if (moveDownPressed) {
+        if (inputManager.moveDown()) {
             desiredVelocity.y += speed;
         }
-        if (moveLeftPressed) {
+        if (inputManager.moveLeft()) {
             desiredVelocity.x -= speed;
         }
-        if (moveRightPressed) {
+        if (inputManager.moveRight()) {
             desiredVelocity.x += speed;
         }
 
