@@ -12,6 +12,7 @@ public:
     void think(float delta) override;
 
 private:
+    bool interacting = false;
 };
 
 

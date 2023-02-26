@@ -9,6 +9,10 @@ void WaitIntent::start(Actor& actor) {
 }
 
 IntentProgress WaitIntent::act(Actor& actor, float delta) {
+    if (aborted) {
+        return IntentProgress::Complete;
+    }
+
     float elapsed = clock.getElapsedTime().asSeconds();
     if (elapsed > secs) {
         return IntentProgress::Complete;

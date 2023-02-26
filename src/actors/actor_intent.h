@@ -19,21 +19,18 @@ public:
 
     virtual void start(Actor& actor) = 0;
     virtual IntentProgress act(Actor& actor, float delta) = 0;
+    virtual void abort();
 
     inline IntentId getId() const;
-    inline void setId(IntentId _id);
 
 protected:
     IntentId id = IntentId::Undefined;
+    bool aborted = false;
 };
 
 
 IntentId ActorIntent::getId() const {
     return id;
-}
-
-void ActorIntent::setId(IntentId _id) {
-    id = _id;
 }
 
 

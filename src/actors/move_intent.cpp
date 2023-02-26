@@ -9,6 +9,10 @@ void MoveIntent::start(Actor& actor) {
 }
 
 IntentProgress MoveIntent::act(Actor& actor, float delta) {
+    if (aborted) {
+        return IntentProgress::Complete;
+    }
+
     IntentProgress rtn = IntentProgress::InProgress;
 
     float deltaX = (target.x - actor.sprite().getPosition().x);

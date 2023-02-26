@@ -19,11 +19,20 @@ void Player::think(float delta) {
         if (curIntent && curIntent->getId() == IntentId::Work) {
             Actor::think(delta);
         } else {
+            interacting = true;
             pushIntent(std::make_shared<WorkIntent>(10.0f));
             Actor::think(delta);
         }
 
     } else {
+        if (interacting) {
+            if (curIntent && curIntent->getId() == IntentId::Work) {
+                curIntent->abort();
+                Actor::think(delta);
+            }
+            interacting = false;
+        }
+
         if (inputManager.modifier()) {
             speed *= 1.7f;
         }
