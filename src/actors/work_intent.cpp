@@ -3,7 +3,7 @@
 
 
 WorkIntent::WorkIntent(float durationInSeconds)
-    : ActorIntent(ACTOR_INTENT_WORK), durationInSeconds(durationInSeconds), startingAngle(0.0f) {}
+    : ActorIntent(IntentId::Work), durationInSeconds(durationInSeconds), startingAngle(0.0f) {}
 
 void WorkIntent::start(Actor& actor) {
     startingAngle = actor.sprite().getRotation();

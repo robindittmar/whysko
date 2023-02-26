@@ -16,7 +16,7 @@ void Player::think(float delta) {
     auto& inputManager = InputManager::instance();
 
     if (inputManager.interact()) {
-        if (curIntent && curIntent->getId() == ACTOR_INTENT_WORK) {
+        if (curIntent && curIntent->getId() == IntentId::Work) {
             Actor::think(delta);
         } else {
             pushIntent(std::make_shared<WorkIntent>(10.0f));
