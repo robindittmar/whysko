@@ -24,11 +24,11 @@ int main() {
     auto window = sf::RenderWindow({1280u, 720u}, "whysko");
     auto viewManager = ViewManager(window);
 
-    window.setFramerateLimit(300);
 
     logging.log("Initializing engine");
     engine.initialize();
     engine.setDrawDebugString(true);
+    engine.setFramerate(300);
 
     auto player = std::make_shared<Player>();
     auto waiter0 = std::make_shared<Waiter>(1, 100.0f, 100.0f, "img/cat.png");
@@ -100,6 +100,8 @@ int main() {
         window.clear(sf::Color(0, 130, 175));
         engine.render(window);
         window.display();
+
+        engine.postRender();
     }
 
     logging.log("Shutting down engine");

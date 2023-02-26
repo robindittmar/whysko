@@ -12,7 +12,7 @@ Player::Player() {
 
 void Player::think(float delta) {
     sf::Vector2f desiredVelocity = {0.f, 0.f};
-    float speed = 170.0f;
+    float speed = 250.0f;
     auto& inputManager = InputManager::instance();
 
     if (inputManager.interact()) {

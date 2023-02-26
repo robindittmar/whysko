@@ -1,5 +1,6 @@
 #include "engine.h"
 #include "SFML/Graphics/Text.hpp"
+#include "SFML/System.hpp"
 
 #include "logging.h"
 #include <sstream>
@@ -20,6 +21,7 @@ bool Engine::shutdown() {
 void Engine::think() {
     ticktimeAccumulator += frameClock.restart().asMicroseconds();
 
+
     while (ticktimeAccumulator > ticktime) {
         Engine::tick((float)ticktime / 1000000.f);
         ticksCurrentSecond++;
@@ -30,7 +32,7 @@ void Engine::think() {
     if (secondsClock.getElapsedTime().asMicroseconds() > 1000000) {
         ticksLastSecond = ticksCurrentSecond;
         ticksCurrentSecond = 0;
-        
+
         framesLastSecond = framesCurrentSecond;
         framesCurrentSecond = 0;
 
@@ -50,8 +52,17 @@ void Engine::render(sf::RenderTarget& renderTarget) {
     }
 
     Engine::drawDebugString(renderTarget);
+}
 
+void Engine::postRender() {
     lastFrameTime = frameClock.getElapsedTime().asMicroseconds();
+    if (framerate > 0) {
+        // super simple, but works good enough
+        if (lastFrameTime < frametime) {
+            sf::sleep(sf::microseconds(frametime - lastFrameTime));
+        }
+    }
+
     framesCurrentSecond++;
 }
 

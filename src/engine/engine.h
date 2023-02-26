@@ -3,6 +3,7 @@
 
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/System/Clock.hpp"
+#include <cassert>
 #include <utility>
 
 #include "../scenes/scene.h"
@@ -21,6 +22,7 @@ public:
     void think();
     void tick(float delta);
     void render(sf::RenderTarget& renderTarget);
+    void postRender();
 
     inline std::shared_ptr<Scene> getScene() const;
     inline void setScene(const std::shared_ptr<Scene>& s);
@@ -29,6 +31,9 @@ public:
 
     inline uint32_t getTickrate() const;
     inline void setTickrate(uint32_t ticks);
+
+    inline uint32_t getFramerate() const;
+    inline void setFramerate(uint32_t frames);
 
     inline bool getDrawDebugString() const;
     inline void setDrawDebugString(bool draw);
@@ -43,6 +48,9 @@ private:
     uint32_t tickrate = 128;
     uint64_t ticktime = 1000000 / tickrate;
     uint64_t ticktimeAccumulator = 0;
+
+    uint32_t framerate = 0;
+    uint64_t frametime = 0;
 
     uint32_t ticksLastSecond = 0;
     uint32_t ticksCurrentSecond = 0;
@@ -85,8 +93,18 @@ uint32_t Engine::getTickrate() const {
 }
 
 void Engine::setTickrate(uint32_t ticks) {
+    assert(ticks > 0);
     tickrate = ticks;
     ticktime = 1000000 / tickrate;
+}
+
+uint32_t Engine::getFramerate() const {
+    return framerate;
+}
+
+void Engine::setFramerate(uint32_t frames) {
+    framerate = frames;
+    frametime = framerate > 0 ? 1000000 / framerate : 0;
 }
 
 bool Engine::getDrawDebugString() const {
