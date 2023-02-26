@@ -1,9 +1,12 @@
 #include "engine.h"
+
+#include "logging.h"
+#include "settings_repository.h"
+#include <sstream>
+
 #include "SFML/Graphics/Text.hpp"
 #include "SFML/System.hpp"
 
-#include "logging.h"
-#include <sstream>
 
 Engine& Engine::instance() {
     static Engine e;
@@ -11,11 +14,19 @@ Engine& Engine::instance() {
 }
 
 bool Engine::initialize() {
-    return true;
+    bool rtn = true;
+    SettingsRepository repo;
+
+    rtn = rtn & repo.loadInputSettings();
+    return rtn;
 }
 
 bool Engine::shutdown() {
-    return true;
+    bool rtn = true;
+    SettingsRepository repo;
+
+    rtn = rtn & repo.writeInputSettings();
+    return rtn;
 }
 
 void Engine::think() {
