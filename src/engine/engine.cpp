@@ -15,17 +15,15 @@ Engine& Engine::instance() {
 
 bool Engine::initialize() {
     bool rtn = true;
-    SettingsRepository repo;
 
-    rtn = rtn & repo.loadInputSettings();
+    rtn = rtn & SettingsRepository::loadInputSettings();
     return rtn;
 }
 
 bool Engine::shutdown() {
     bool rtn = true;
-    SettingsRepository repo;
 
-    rtn = rtn & repo.writeInputSettings();
+    rtn = rtn & SettingsRepository::writeInputSettings();
     return rtn;
 }
 

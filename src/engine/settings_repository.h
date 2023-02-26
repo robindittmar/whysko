@@ -7,11 +7,11 @@
 
 class SettingsRepository {
 public:
-    SettingsRepository() = default;
-    ~SettingsRepository() = default;
+    SettingsRepository() = delete;
+    ~SettingsRepository() = delete;
 
-    bool loadInputSettings();
-    bool writeInputSettings();
+    static bool loadInputSettings();
+    static bool writeInputSettings();
 
 private:
     static bool parseInputJson(const std::string& buffer);
