@@ -29,7 +29,7 @@ private:
     void buildDebugMesh();
 
     std::vector<MapTile> tiles;
-    std::vector<MapTile*> collidableTiles;
+    std::vector<MapTile> collidableTiles;
 
     sf::Texture texture;
     sf::VertexArray bgVertices;

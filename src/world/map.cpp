@@ -13,7 +13,7 @@ void Map::pushTiles(const std::vector<MapTile>& mapTiles) {
     tiles.insert(tiles.end(), mapTiles.begin(), mapTiles.end());
     std::for_each(tiles.begin(), tiles.end(), [this](auto& t) {
         if (t.hasCollision()) {
-            collidableTiles.push_back(&t);
+            collidableTiles.push_back(t);
         }
     });
 }
@@ -32,8 +32,8 @@ void Map::buildMesh() {
 }
 
 bool Map::collides(const sf::FloatRect& bounds) const {
-    return std::any_of(collidableTiles.cbegin(), collidableTiles.cend(), [&bounds](auto ptr) {
-        return ptr->getCollisionBounds().intersects(bounds);
+    return std::any_of(collidableTiles.cbegin(), collidableTiles.cend(), [&bounds](auto& tile) {
+        return tile.getCollisionBounds().intersects(bounds);
     });
 }
 
@@ -55,6 +55,6 @@ void Map::buildDebugMesh() {
 
     collidableVertices.resize(tilesCount * 4);
     for (std::vector<MapTile>::size_type i = 0; i != tilesCount; i++) {
-        collidableTiles[i]->writeDebugVertexQuad(&collidableVertices[i * 4]);
+        collidableTiles[i].writeDebugVertexQuad(&collidableVertices[i * 4]);
     }
 }
