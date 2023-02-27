@@ -4,6 +4,7 @@
 void GameScene::setup() {
     map = MapBuilder()
               .loadFromFile("map/0.json")
+              .setDrawDebugInfo(true)
               .build();
 }
 

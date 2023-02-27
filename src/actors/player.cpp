@@ -1,6 +1,7 @@
 #include "player.h"
 #include "../engine/engine.h"
 #include "../engine/input_manager.h"
+#include "../scenes/game_scene.h"
 #include "work_intent.h"
 
 Player::Player() {
@@ -8,6 +9,9 @@ Player::Player() {
     _sprite.setOrigin(32.0f, 32.0f);
     _sprite.setPosition(600.0f, 600.0f);
     _sprite.setScale(5.0f, 5.0f);
+
+    hitbox.resize(5);
+    hitbox.setPrimitiveType(sf::LineStrip);
 }
 
 void Player::think(float delta) {
@@ -34,7 +38,7 @@ void Player::think(float delta) {
         }
 
         if (inputManager.modifier()) {
-            speed *= 1.7f;
+            speed *= 3.1f;
         }
         if (inputManager.moveUp()) {
             desiredVelocity.y -= speed;
@@ -58,6 +62,36 @@ void Player::think(float delta) {
             desiredVelocity.y *= delta;
 
             _sprite.move(desiredVelocity);
+
+            auto& map = std::dynamic_pointer_cast<GameScene>(Engine::instance().getScene())->getMap();
+            if (map.collides(_sprite.getGlobalBounds())) {
+                _sprite.move(-desiredVelocity);
+            }
         }
     }
+}
+
+void Player::render(sf::RenderTarget& renderTarget) {
+    Actor::render(renderTarget);
+
+    if (drawHitbox) {
+        setupHitbox();
+        renderTarget.draw(hitbox);
+    }
+}
+
+void Player::setupHitbox() {
+    auto bounds = _sprite.getGlobalBounds();
+
+    hitbox[0].position = sf::Vector2f(bounds.left, bounds.top);
+    hitbox[1].position = sf::Vector2f(bounds.left + bounds.width, bounds.top);
+    hitbox[2].position = sf::Vector2f(bounds.left + bounds.width, bounds.top + bounds.height);
+    hitbox[3].position = sf::Vector2f(bounds.left, bounds.top + bounds.height);
+    hitbox[4].position = sf::Vector2f(bounds.left, bounds.top);
+
+    hitbox[0].color = sf::Color::Green;
+    hitbox[1].color = sf::Color::Green;
+    hitbox[2].color = sf::Color::Green;
+    hitbox[3].color = sf::Color::Green;
+    hitbox[4].color = sf::Color::Green;
 }

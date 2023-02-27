@@ -36,6 +36,8 @@ int main() {
     auto waiter2 = std::make_shared<Waiter>(3, 500.0f, 500.0f, "img/cat2.png");
     auto waiter3 = std::make_shared<Waiter>(4, 300.0f, 300.0f, "img/cat2.png");
 
+    player->setDrawHitbox(true);
+
     waiter0->pushIntents({
         std::make_shared<WaitIntent>(10.0f),
         std::make_shared<WorkIntent>(1.0f),

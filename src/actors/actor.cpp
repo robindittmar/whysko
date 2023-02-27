@@ -17,7 +17,7 @@ void Actor::think(float delta) {
     }
 }
 
-void Actor::render(sf::RenderTarget& renderTarget) const {
+void Actor::render(sf::RenderTarget& renderTarget) {
     renderTarget.draw(_sprite);
 }
 

@@ -18,10 +18,16 @@ public:
 
     void addActor(const std::shared_ptr<Actor>& actor);
 
+    inline Map& getMap();
+
 private:
     Map map;
     std::vector<std::shared_ptr<Actor>> actors;
 };
 
+
+Map& GameScene::getMap() {
+    return map;
+}
 
 #endif//WHYSKO_GAME_SCENE_H

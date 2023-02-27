@@ -21,7 +21,7 @@ public:
     virtual ~Actor() = default;
 
     virtual void think(float delta);
-    virtual void render(sf::RenderTarget& renderTarget) const;
+    virtual void render(sf::RenderTarget& renderTarget);
 
     void pushIntent(const std::shared_ptr<ActorIntent>& intent);
     void pushIntents(const std::vector<std::shared_ptr<ActorIntent>>& intents);

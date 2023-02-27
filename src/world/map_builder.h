@@ -17,12 +17,15 @@ public:
     MapBuilder& setTileMap(const std::string& tilemap);
     MapBuilder& setTiles(const std::vector<MapTile>& tilesVector);
 
+    MapBuilder& setDrawDebugInfo(bool draw);
+
     MapBuilder& loadFromFile(const std::string& filename);
     MapBuilder& loadFromJson(const std::string& mapAsJson);
 
 private:
     std::string tileMap;
     std::vector<MapTile> tiles;
+    bool drawDebugInfo;
 };
 
 
