@@ -11,12 +11,7 @@ void WorkIntent::start(Actor& actor) {
 }
 
 IntentProgress WorkIntent::act(Actor& actor, float delta) {
-    if (aborted) {
-        actor.sprite().setRotation(startingAngle);
-        return IntentProgress::Complete;
-    }
-
-    if (clock.getElapsedTime().asSeconds() > durationInSeconds) {
+    if (aborted || clock.getElapsedTime().asSeconds() > durationInSeconds) {
         actor.sprite().setRotation(startingAngle);
         return IntentProgress::Complete;
     }
