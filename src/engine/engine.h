@@ -4,6 +4,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/System/Clock.hpp"
 #include <cassert>
+#include <memory>
 #include <utility>
 
 #include "../scenes/scene.h"

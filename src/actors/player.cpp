@@ -3,6 +3,7 @@
 #include "../engine/input_manager.h"
 #include "../scenes/game_scene.h"
 #include "work_intent.h"
+#include <cmath>
 
 Player::Player() {
     _sprite.setTexture(Engine::instance().getResourceManager().loadTexture("img/cat2.png"));
