@@ -17,7 +17,7 @@ void ViewManager::handleEvent(sf::Event& event) {
             this->stopDragging();
         }
     } else if (event.type == sf::Event::MouseWheelMoved) {
-        this->zoom(event.mouseWheel.delta);
+        this->zoom(event.mouseWheel.x, event.mouseWheel.y, event.mouseWheel.delta);
     }
 }
 
@@ -43,17 +43,26 @@ void ViewManager::stopDragging() {
     isDragging = false;
 }
 
-void ViewManager::zoom(int delta) {
+void ViewManager::zoom(int x, int y, int delta) {
     if (isDragging) {
         return;
     }
 
+    sf::Vector2f mouseSceneCoords = window.mapPixelToCoords(sf::Vector2i(x, y));
     auto view = window.getView();
+    auto center = view.getCenter();
     auto size = view.getSize();
 
     size.x *= 1 - ((float)delta / 12.f);
     size.y *= 1 - ((float)delta / 12.f);
 
+    auto diff = mouseSceneCoords - center;
+    diff.x *= .1f;
+    diff.y *= .1f;
+
     view.setSize(size);
+    if (delta > 0) {
+        view.move(diff);
+    }
     window.setView(view);
 }

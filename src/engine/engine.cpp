@@ -68,7 +68,7 @@ void Engine::postRender() {
     if (framerate > 0) {
         // super simple, but works good enough
         if (lastFrameTime < frametime) {
-            sf::sleep(sf::microseconds(frametime - lastFrameTime));
+            sf::sleep(sf::microseconds(frametime - lastFrameTime - 100));
         }
     }
 

@@ -19,6 +19,7 @@ void Player::think(float delta) {
     sf::Vector2f desiredVelocity = {0.f, 0.f};
     float speed = 250.0f;
     auto& inputManager = InputManager::instance();
+    auto& map = std::dynamic_pointer_cast<GameScene>(Engine::instance().getScene())->getMap();
 
     if (inputManager.interact()) {
         if (curIntent && curIntent->getId() == IntentId::Work) {
@@ -56,17 +57,25 @@ void Player::think(float delta) {
 
         float len = sqrt(desiredVelocity.x * desiredVelocity.x + desiredVelocity.y * desiredVelocity.y);
         if (len > 0) {
-            desiredVelocity.x *= std::abs(desiredVelocity.x / len);
-            desiredVelocity.y *= std::abs(desiredVelocity.y / len);
+            //            desiredVelocity.x *= std::abs(desiredVelocity.x / len);
+            //            desiredVelocity.y *= std::abs(desiredVelocity.y / len);
+            //
+            //            desiredVelocity.x *= delta;
+            //            desiredVelocity.y *= delta;
 
-            desiredVelocity.x *= delta;
-            desiredVelocity.y *= delta;
+            float velocityX = desiredVelocity.x * std::abs(desiredVelocity.x / len);
+            float velocityY = desiredVelocity.y * std::abs(desiredVelocity.y / len);
+            velocityX *= delta;
+            velocityY *= delta;
 
-            _sprite.move(desiredVelocity);
-
-            auto& map = std::dynamic_pointer_cast<GameScene>(Engine::instance().getScene())->getMap();
+            _sprite.move(velocityX, 0.f);
             if (map.collides(_sprite.getGlobalBounds())) {
-                _sprite.move(-desiredVelocity);
+                _sprite.move(-velocityX, 0.f);
+            }
+
+            _sprite.move(0.f, velocityY);
+            if (map.collides(_sprite.getGlobalBounds())) {
+                _sprite.move(0.f, -velocityY);
             }
         }
     }

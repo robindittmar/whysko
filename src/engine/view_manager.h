@@ -15,7 +15,7 @@ public:
     void drag(int x, int y);
     void stopDragging();
 
-    void zoom(int delta);
+    void zoom(int x, int y, int delta);
 
 private:
     sf::RenderWindow& window;
