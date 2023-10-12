@@ -11,7 +11,7 @@ public:
     explicit WaitIntent(float seconds);
 
     void start(Actor& actor) override;
-    IntentProgress act(Actor& actor, float delta) override;
+    IntentProgress act(Actor& actor, float deltaTime) override;
 
 private:
     float secs;

@@ -4,11 +4,11 @@
 #include "engine/input_manager.h"
 #include "engine/view_manager.h"
 
-#include "actors/move_intent.h"
-#include "actors/player.h"
-#include "actors/wait_intent.h"
-#include "actors/waiter.h"
-#include "actors/work_intent.h"
+#include "entities/move_intent.h"
+#include "entities/player.h"
+#include "entities/wait_intent.h"
+#include "entities/waiter.h"
+#include "entities/work_intent.h"
 #include "scenes/game_scene.h"
 
 #include <SFML/Audio.hpp>
@@ -28,7 +28,7 @@ int main() {
     logging.log("Initializing engine");
     engine.initialize();
     engine.setDrawDebugString(true);
-    engine.setFramerate(300);
+    //    engine.setFramerate(300);
 
     auto player = std::make_shared<Player>();
     auto waiter0 = std::make_shared<Waiter>(1, 100.0f, 100.0f, "img/cat.png");
@@ -73,11 +73,11 @@ int main() {
     });
 
     auto scene = std::make_shared<GameScene>();
-    scene->addActor(player);
-    scene->addActor(waiter0);
-    scene->addActor(waiter1);
-    scene->addActor(waiter2);
-    scene->addActor(waiter3);
+    scene->addEntity(player);
+    scene->addEntity(waiter0);
+    scene->addEntity(waiter1);
+    scene->addEntity(waiter2);
+    scene->addEntity(waiter3);
     scene->setup();
 
     engine.setScene(scene);

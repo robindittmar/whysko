@@ -10,7 +10,7 @@ public:
     Player();
     ~Player() override = default;
 
-    void think(float delta) override;
+    void think(float deltaTime) override;
     void render(sf::RenderTarget& renderTarget) override;
 
     inline void setDrawHitbox(bool draw);

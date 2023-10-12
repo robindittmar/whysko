@@ -8,7 +8,7 @@ void WaitIntent::start(Actor& actor) {
     clock.restart();
 }
 
-IntentProgress WaitIntent::act(Actor& actor, float delta) {
+IntentProgress WaitIntent::act(Actor& actor, float deltaTime) {
     if (aborted) {
         return IntentProgress::Complete;
     }

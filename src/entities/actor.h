@@ -2,6 +2,7 @@
 #define WHYSKO_ACTOR_H
 
 #include "actor_intent.h"
+#include "entity.h"
 
 #include <memory>
 #include <queue>
@@ -15,13 +16,12 @@ enum class ActorState {
     Acting
 };
 
-class Actor {
+class Actor : public Entity {
 public:
     Actor() = default;
     virtual ~Actor() = default;
 
-    virtual void think(float delta);
-    virtual void render(sf::RenderTarget& renderTarget);
+    virtual void think(float deltaTime) override;
 
     void pushIntent(const std::shared_ptr<ActorIntent>& intent);
     void pushIntents(const std::vector<std::shared_ptr<ActorIntent>>& intents);
@@ -29,12 +29,9 @@ public:
     inline ActorState getState() const;
     inline void setState(ActorState& s);
 
-    inline sf::Sprite& sprite();
-
 protected:
     virtual std::shared_ptr<ActorIntent> nextIntent();
 
-    sf::Sprite _sprite;
     ActorState state = ActorState::Idle;
     std::shared_ptr<ActorIntent> curIntent;
     std::queue<std::shared_ptr<ActorIntent>> intentQueue;
@@ -49,10 +46,6 @@ ActorState Actor::getState() const {
 
 void Actor::setState(ActorState& s) {
     state = s;
-}
-
-sf::Sprite& Actor::sprite() {
-    return _sprite;
 }
 
 

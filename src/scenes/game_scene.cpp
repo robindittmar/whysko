@@ -8,20 +8,37 @@ void GameScene::setup() {
               .build();
 }
 
-void GameScene::think(float delta) {
-    for (auto& actor : actors) {
-        actor->think(delta);
+void GameScene::think(float deltaTime) {
+    for (auto& entity : entities) {
+        if (!entity->getActive())
+            continue;
+
+        entity->think(deltaTime);
     }
+
+    entities.insert(entities.end(), entityQueue.begin(), entityQueue.end());
+    entityQueue.clear();
 }
 
 void GameScene::render(sf::RenderTarget& renderTarget) {
     renderTarget.draw(map);
 
-    for (const auto& actor : actors) {
-        actor->render(renderTarget);
+    for (const auto& entity : entities) {
+        if (!entity->getActive())
+            continue;
+
+        entity->render(renderTarget);
     }
 }
 
-void GameScene::addActor(const std::shared_ptr<Actor>& actor) {
-    actors.push_back(actor);
+void GameScene::addEntity(const std::shared_ptr<Entity>& entity) {
+    entity->setId(entityCounter++);
+    entityQueue.push_back(entity);
+}
+
+void GameScene::removeInactiveEntities() {
+    entities.erase(std::remove_if(entities.begin(), entities.end(), [](const auto& entity) {
+                       return !entity->getActive();
+                   }),
+                   entities.end());
 }

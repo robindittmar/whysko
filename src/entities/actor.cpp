@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void Actor::think(float delta) {
+void Actor::think(float deltaTime) {
     if (state == ActorState::Idle) {
         curIntent = this->nextIntent();
         if (curIntent) {
@@ -10,15 +10,11 @@ void Actor::think(float delta) {
     }
 
     if (state == ActorState::Acting) {
-        if (curIntent->act(*this, delta) == IntentProgress::Complete) {
+        if (curIntent->act(*this, deltaTime) == IntentProgress::Complete) {
             state = ActorState::Idle;
             curIntent = nullptr;
         }
     }
-}
-
-void Actor::render(sf::RenderTarget& renderTarget) {
-    renderTarget.draw(_sprite);
 }
 
 void Actor::pushIntent(const std::shared_ptr<ActorIntent>& intent) {

@@ -1,8 +1,8 @@
 file(GLOB SOURCE_FILES "*.cpp")
 file(GLOB HEADER_FILES "*.h")
 
-file(GLOB ACTORS_SOURCE_FILES "actors/*.cpp")
-file(GLOB ACTORS_HEADER_FILES "actors/*.h")
+file(GLOB ACTORS_SOURCE_FILES "entities/*.cpp")
+file(GLOB ACTORS_HEADER_FILES "entities/*.h")
 
 file(GLOB ENGINE_SOURCE_FILES "engine/*.cpp")
 file(GLOB ENGINE_HEADER_FILES "engine/*.h")

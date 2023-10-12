@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "../actors/actor.h"
+#include "../entities/entity.h"
 #include "../world/map.h"
 #include "scene.h"
 
@@ -13,16 +13,19 @@ class GameScene : public Scene {
 public:
     void setup();
 
-    void think(float delta) override;
+    void think(float deltaTime) override;
     void render(sf::RenderTarget& renderTarget) override;
 
-    void addActor(const std::shared_ptr<Actor>& actor);
+    void addEntity(const std::shared_ptr<Entity>& entity);
+    void removeInactiveEntities();
 
     inline Map& getMap();
 
 private:
+    uint64_t entityCounter = 0;
     Map map;
-    std::vector<std::shared_ptr<Actor>> actors;
+    std::vector<std::shared_ptr<Entity>> entities;
+    std::vector<std::shared_ptr<Entity>> entityQueue;
 };
 
 

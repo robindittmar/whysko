@@ -11,7 +11,7 @@ public:
     MoveIntent(sf::Vector2f moveTo, float speed);
 
     void start(Actor& actor) override;
-    IntentProgress act(Actor& actor, float delta) override;
+    IntentProgress act(Actor& actor, float deltaTime) override;
 
 private:
     sf::Vector2f target;

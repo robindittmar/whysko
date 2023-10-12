@@ -18,7 +18,7 @@ public:
     virtual ~ActorIntent() = default;
 
     virtual void start(Actor& actor) = 0;
-    virtual IntentProgress act(Actor& actor, float delta) = 0;
+    virtual IntentProgress act(Actor& actor, float deltaTime) = 0;
     virtual void abort();
 
     inline IntentId getId() const;
