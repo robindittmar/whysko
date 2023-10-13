@@ -5,9 +5,11 @@
 #include "SFML/System/Clock.hpp"
 #include <cassert>
 #include <memory>
+#include <random>
 #include <utility>
 
 #include "../scenes/scene.h"
+#include "debug_view.h"
 #include "resource_manager.h"
 
 class Engine {
@@ -30,21 +32,20 @@ public:
 
     inline ResourceManager& getResourceManager();
 
+    inline float getRandomNumber();
+
     inline uint32_t getTickrate() const;
     inline void setTickrate(uint32_t ticks);
 
     inline uint32_t getFramerate() const;
     inline void setFramerate(uint32_t frames);
 
-    inline bool getDrawDebugString() const;
-    inline void setDrawDebugString(bool draw);
+    inline DebugView& getDebugView();
 
 private:
     Engine() = default;
     ~Engine() = default;
 
-
-    void drawDebugString(sf::RenderTarget& target) const;
 
     uint32_t tickrate = 128;
     uint64_t ticktime = 1000000 / tickrate;
@@ -65,14 +66,15 @@ private:
     sf::Clock secondsClock;
     sf::Clock frameClock;
 
-    bool _drawDebugString = false;
-
     sf::Clock startupClock;
 
     ResourceManager resourceManager;
 
-    sf::Font& renderFont = resourceManager.loadFont("fnt/FiraCode-Regular.ttf");
+    std::random_device randomDevice;
+    std::default_random_engine randomEngine{randomDevice()};
+    std::uniform_real_distribution<float> randomDistribution{0.0f, std::nextafter(1.0f, 2.0f)};
 
+    DebugView debugView;
     std::shared_ptr<Scene> scene = nullptr;
 };
 
@@ -87,6 +89,10 @@ void Engine::setScene(const std::shared_ptr<Scene>& s) {
 
 ResourceManager& Engine::getResourceManager() {
     return resourceManager;
+}
+
+float Engine::getRandomNumber() {
+    return randomDistribution(randomEngine);
 }
 
 uint32_t Engine::getTickrate() const {
@@ -108,12 +114,8 @@ void Engine::setFramerate(uint32_t frames) {
     frametime = framerate > 0 ? 1000000 / framerate : 0;
 }
 
-bool Engine::getDrawDebugString() const {
-    return _drawDebugString;
-}
-
-void Engine::setDrawDebugString(const bool draw) {
-    _drawDebugString = draw;
+DebugView& Engine::getDebugView() {
+    return debugView;
 }
 
 

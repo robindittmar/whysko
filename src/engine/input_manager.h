@@ -1,6 +1,7 @@
 #ifndef WHYSKO_INPUT_MANAGER_H
 #define WHYSKO_INPUT_MANAGER_H
 
+#include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Window/Event.hpp"
 
 
@@ -8,7 +9,10 @@ class InputManager {
 public:
     static InputManager& instance();
 
+    void init(sf::RenderWindow* renderWindow);
     void handleEvent(sf::Event& event);
+
+    inline sf::Vector2f mousePosWorld() const;
 
     inline bool moveUp() const;
     inline bool moveDown() const;
@@ -21,6 +25,10 @@ private:
     InputManager() = default;
     ~InputManager() = default;
 
+    sf::RenderWindow* window = nullptr;
+
+    sf::Vector2f mousePosWorldVec = sf::Vector2f(0.0f, 0.0f);
+
     bool moveUpPressed = false;
     bool moveDownPressed = false;
     bool moveLeftPressed = false;
@@ -29,6 +37,10 @@ private:
     bool modPressed = false;
 };
 
+
+sf::Vector2f InputManager::mousePosWorld() const {
+    return mousePosWorldVec;
+}
 
 bool InputManager::moveUp() const {
     return moveUpPressed;

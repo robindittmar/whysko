@@ -20,80 +20,114 @@ void Player::think(float deltaTime) {
     sf::Vector2f desiredVelocity = {0.f, 0.f};
     float speed = 250.0f;
     auto& inputManager = InputManager::instance();
-    auto gameScene = std::dynamic_pointer_cast<GameScene>(Engine::instance().getScene());
-    auto& map = gameScene->getMap();
-
-    //    if (inputManager.interact()) {
-    //        if (curIntent && curIntent->getId() == IntentId::Work) {
-    //            Actor::think(deltaTime);
-    //        } else {
-    //            interacting = true;
-    //            pushIntent(std::make_shared<WorkIntent>(10.0f));
-    //            Actor::think(deltaTime);
-    //        }
-    //
-    //    } else {
-    //        if (interacting) {
-    //            if (curIntent && curIntent->getId() == IntentId::Work) {
-    //                curIntent->abort();
-    //                Actor::think(deltaTime);
-    //            }
-    //            interacting = false;
-    //        }
 
     if (inputManager.modifier()) {
         speed *= 3.1f;
     }
     if (inputManager.moveUp()) {
-        desiredVelocity.y -= speed;
+        desiredVelocity.y -= speed * deltaTime;
     }
     if (inputManager.moveDown()) {
-        desiredVelocity.y += speed;
+        desiredVelocity.y += speed * deltaTime;
     }
     if (inputManager.moveLeft()) {
-        desiredVelocity.x -= speed;
+        desiredVelocity.x -= speed * deltaTime;
     }
     if (inputManager.moveRight()) {
-        desiredVelocity.x += speed;
+        desiredVelocity.x += speed * deltaTime;
     }
 
-    sf::Vector2f actualVelocity;
-    float len = sqrt(desiredVelocity.x * desiredVelocity.x + desiredVelocity.y * desiredVelocity.y);
-    if (len > 0) {
-        actualVelocity.x = desiredVelocity.x * std::abs(desiredVelocity.x / len);
-        actualVelocity.y = desiredVelocity.y * std::abs(desiredVelocity.y / len);
-        float velocityX = actualVelocity.x * deltaTime;
-        float velocityY = actualVelocity.y * deltaTime;
-
-        sprite.move(velocityX, 0.f);
-        if (map.collides(sprite.getGlobalBounds())) {
-            actualVelocity.x = 0.0f;
-            sprite.move(-velocityX, 0.f);
+    move(deltaTime, desiredVelocity);
+    if (shootCooldown <= 0.0f) {
+        if (inputManager.interact()) {
+            shoot(deltaTime);
+            shootCooldown = MAX_SHOOT_COOLDOWN;
         }
-
-        sprite.move(0.f, velocityY);
-        if (map.collides(sprite.getGlobalBounds())) {
-            actualVelocity.y = 0.0f;
-            sprite.move(0.f, -velocityY);
-        }
+    } else {
+        shootCooldown -= deltaTime;
     }
-
-    if (inputManager.interact()) {
-        sf::Vector2f vel = actualVelocity + sf::Vector2f(1000.f, 0.f);
-        std::shared_ptr<Bullet>
-            b = std::make_shared<Bullet>(sprite.getPosition(), vel);
-        gameScene->addEntity(b);
-    }
-    //    }
 }
 
 void Player::render(sf::RenderTarget& renderTarget) {
-    Actor::render(renderTarget);
+    Entity::render(renderTarget);
 
     if (drawHitbox) {
         setupHitbox();
         renderTarget.draw(hitbox);
     }
+}
+
+void Player::move(float deltaTime, sf::Vector2f desiredVelocity) {
+    auto gameScene = std::dynamic_pointer_cast<GameScene>(Engine::instance().getScene());
+    auto& map = gameScene->getMap();
+
+    float len = sqrt(desiredVelocity.x * desiredVelocity.x + desiredVelocity.y * desiredVelocity.y);
+    if (len > 0.f) {
+        velocity.x = desiredVelocity.x * std::abs(desiredVelocity.x / len);
+        velocity.y = desiredVelocity.y * std::abs(desiredVelocity.y / len);
+
+        sprite.move(velocity);
+        if (map.collides(sprite.getGlobalBounds())) {
+            // Reset position
+            sprite.move(-velocity);
+
+            // Move only on x-axis
+            sf::Vector2f xonly = {velocity.x, 0.f};
+            sprite.move(xonly);
+            if (map.collides(sprite.getGlobalBounds())) {
+                // If we collide again, correct again.
+                sprite.move(-xonly);
+                velocity.x = 0.f;
+            }
+
+            // Move only on y-axis
+            sf::Vector2f yonly = {0.f, velocity.y};
+            sprite.move(yonly);
+            if (map.collides(sprite.getGlobalBounds())) {
+                // If we collide again, correct again.
+                sprite.move(-yonly);
+                velocity.y = 0.f;
+            }
+        }
+    } else {
+        if (velocity.x != 0.0f || velocity.y != 0.0f) {
+            velocity.x /= 2;
+            velocity.y /= 2;
+            if (velocity.x <= 0.002f && velocity.y <= 0.002f) {
+                velocity.x = 0.f;
+                velocity.y = 0.f;
+            }
+        }
+    }
+}
+
+void Player::shoot(float deltaTime) {
+    auto gameScene = std::dynamic_pointer_cast<GameScene>(Engine::instance().getScene());
+
+    float bulletSpeed = 2500.0f;
+    float spread = ((rand() / (float)RAND_MAX) - 0.5f) * 0.1f;
+
+    sf::Vector2f aimingAt = InputManager::instance().mousePosWorld();
+
+    // Figure out shoot direction
+    sf::Vector2f bulletVelocity = sprite.getPosition() - aimingAt;
+    float len = sqrt(bulletVelocity.x * bulletVelocity.x + bulletVelocity.y * bulletVelocity.y);
+    bulletVelocity /= len;
+
+    // Add spread
+    float acosi = acos(bulletVelocity.x) + spread;
+    float asini = asin(bulletVelocity.y) + spread;
+
+    bulletVelocity.x = cos(acosi);
+    bulletVelocity.y = sin(asini);
+
+    // Multiply with speed
+    bulletVelocity *= -(bulletSpeed * deltaTime);
+
+    // Add player velocity to bullet
+    bulletVelocity += velocity;
+
+    gameScene->addEntity(std::make_shared<Bullet>(sprite.getPosition(), bulletVelocity));
 }
 
 void Player::setupHitbox() {

@@ -6,10 +6,16 @@ InputManager& InputManager::instance() {
     return im;
 }
 
+void InputManager::init(sf::RenderWindow* renderWindow) {
+    window = renderWindow;
+}
+
 void InputManager::handleEvent(sf::Event& event) {
     InputSettings& settings = InputSettings::instance();
 
-    if (event.type == sf::Event::KeyPressed) {
+    if (event.type == sf::Event::MouseMoved) {
+        mousePosWorldVec = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+    } else if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == settings.keyMoveUp) {
             moveUpPressed = true;
         } else if (event.key.code == settings.keyMoveDown) {

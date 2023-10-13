@@ -2,9 +2,10 @@
 
 #include "logging.h"
 #include "settings_repository.h"
+
+#include <random>
 #include <sstream>
 
-#include "SFML/Graphics/Text.hpp"
 #include "SFML/System.hpp"
 
 
@@ -16,7 +17,12 @@ Engine& Engine::instance() {
 bool Engine::initialize() {
     bool rtn = true;
 
+    debugView.init();
+    debugView.addDynamicValue("framerate", &framesLastSecond);
+    debugView.addDynamicValue("tickrate", &ticksLastSecond);
+
     rtn = rtn & SettingsRepository::loadInputSettings();
+
     return rtn;
 }
 
@@ -60,7 +66,7 @@ void Engine::render(sf::RenderTarget& renderTarget) {
         scene->render(renderTarget);
     }
 
-    Engine::drawDebugString(renderTarget);
+    debugView.render(renderTarget);
 }
 
 void Engine::postRender() {
@@ -73,22 +79,4 @@ void Engine::postRender() {
     }
 
     framesCurrentSecond++;
-}
-
-void Engine::drawDebugString(sf::RenderTarget& target) const {
-    if (_drawDebugString) {
-        sf::Text text(std::string("fps: ") +
-                          std::to_string(framesLastSecond) +
-                          std::string(" / tickrate: ") +
-                          std::to_string(ticksLastSecond),
-                      renderFont, 16);
-
-        text.setPosition(0.0f, 0.0f);
-
-        auto view = target.getView();
-        auto debugView = sf::View(sf::FloatRect(0.0f, 0.0f, 1280.0f, 720.0f));
-        target.setView(debugView);
-        target.draw(text);
-        target.setView(view);
-    }
 }

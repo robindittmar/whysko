@@ -22,7 +22,8 @@ public:
     inline Map& getMap();
 
 private:
-    uint64_t entityCounter = 0;
+    uint32_t entityCount = 0;
+    uint64_t entityIdCounter = 0;
     Map map;
     std::vector<std::shared_ptr<Entity>> entities;
     std::vector<std::shared_ptr<Entity>> entityQueue;

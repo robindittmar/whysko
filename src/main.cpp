@@ -23,11 +23,11 @@ int main() {
 
     auto window = sf::RenderWindow({1280u, 720u}, "whysko");
     auto viewManager = ViewManager(window);
-
+    inputManager.init(&window);
 
     logging.log("Initializing engine");
     engine.initialize();
-    engine.setDrawDebugString(true);
+    engine.getDebugView().setVisible(true);
     //    engine.setFramerate(300);
 
     auto player = std::make_shared<Player>();
