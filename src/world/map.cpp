@@ -31,10 +31,16 @@ void Map::buildMesh() {
     }
 }
 
-bool Map::collides(const sf::FloatRect& bounds) const {
-    return std::any_of(collidableTiles.cbegin(), collidableTiles.cend(), [&bounds](auto& tile) {
-        return tile.getCollisionBounds().intersects(bounds);
-    });
+bool Map::collides(const sf::FloatRect& bounds, std::vector<sf::FloatRect>& out) const {
+    bool isColliding = false;
+    for (auto& tile : collidableTiles) {
+        if (tile.getCollisionBounds().intersects(bounds)) {
+            out.push_back(tile.getCollisionBounds());
+            isColliding = true;
+        }
+    }
+
+    return isColliding;
 }
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const {

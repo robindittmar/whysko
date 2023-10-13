@@ -59,7 +59,8 @@ void Player::render(sf::RenderTarget& renderTarget) {
 
 void Player::move(float deltaTime, sf::Vector2f desiredVelocity) {
     auto gameScene = std::dynamic_pointer_cast<GameScene>(Engine::instance().getScene());
-    auto& map = gameScene->getMap();
+    auto& collisionManager = gameScene->getCollisionManager();
+    //    auto& map = gameScene->getMap();
 
     float len = sqrt(desiredVelocity.x * desiredVelocity.x + desiredVelocity.y * desiredVelocity.y);
     if (len > 0.f) {
@@ -67,26 +68,19 @@ void Player::move(float deltaTime, sf::Vector2f desiredVelocity) {
         velocity.y = desiredVelocity.y * std::abs(desiredVelocity.y / len);
 
         sprite.move(velocity);
-        if (map.collides(sprite.getGlobalBounds())) {
-            // Reset position
-            sprite.move(-velocity);
+        std::vector<sf::FloatRect> colliding;
+        if (collisionManager.collidesWithMap(sprite.getGlobalBounds(), colliding)) {
+            auto fixMove = collisionManager.fixMove(
+                velocity,
+                sprite.getGlobalBounds(),
+                colliding);
+            sprite.move(fixMove);
 
-            // Move only on x-axis
-            sf::Vector2f xonly = {velocity.x, 0.f};
-            sprite.move(xonly);
-            if (map.collides(sprite.getGlobalBounds())) {
-                // If we collide again, correct again.
-                sprite.move(-xonly);
-                velocity.x = 0.f;
+            if (fixMove.x != 0.0f) {
+                velocity.x = 0.0f;
             }
-
-            // Move only on y-axis
-            sf::Vector2f yonly = {0.f, velocity.y};
-            sprite.move(yonly);
-            if (map.collides(sprite.getGlobalBounds())) {
-                // If we collide again, correct again.
-                sprite.move(-yonly);
-                velocity.y = 0.f;
+            if (fixMove.y != 0.0f) {
+                velocity.y = 0.0f;
             }
         }
     } else {
@@ -104,30 +98,32 @@ void Player::move(float deltaTime, sf::Vector2f desiredVelocity) {
 void Player::shoot(float deltaTime) {
     auto gameScene = std::dynamic_pointer_cast<GameScene>(Engine::instance().getScene());
 
-    float bulletSpeed = 2500.0f;
-    float spread = ((rand() / (float)RAND_MAX) - 0.5f) * 0.1f;
+    for (int i = 0; i < 12; i++) {
+        float bulletSpeed = 3500.0f + ((Engine::instance().getRandomNumber() - 0.5f) * 300.f);
+        float spread = (Engine::instance().getRandomNumber() - 0.5f) * 2.0f * 3.14159f;
 
-    sf::Vector2f aimingAt = InputManager::instance().mousePosWorld();
+        sf::Vector2f aimingAt = InputManager::instance().mousePosWorld();
 
-    // Figure out shoot direction
-    sf::Vector2f bulletVelocity = sprite.getPosition() - aimingAt;
-    float len = sqrt(bulletVelocity.x * bulletVelocity.x + bulletVelocity.y * bulletVelocity.y);
-    bulletVelocity /= len;
+        // Figure out shoot direction
+        sf::Vector2f bulletVelocity = aimingAt - sprite.getPosition();
+        float len = sqrt(bulletVelocity.x * bulletVelocity.x + bulletVelocity.y * bulletVelocity.y);
+        bulletVelocity /= len;
 
-    // Add spread
-    float acosi = acos(bulletVelocity.x) + spread;
-    float asini = asin(bulletVelocity.y) + spread;
+        // Add spread
+        float acosi = acos(bulletVelocity.x) + spread;
+        float asini = asin(bulletVelocity.y) + spread;
 
-    bulletVelocity.x = cos(acosi);
-    bulletVelocity.y = sin(asini);
+        bulletVelocity.x = cos(acosi);
+        bulletVelocity.y = sin(asini);
 
-    // Multiply with speed
-    bulletVelocity *= -(bulletSpeed * deltaTime);
+        // Multiply with speed
+        bulletVelocity *= bulletSpeed * deltaTime;
 
-    // Add player velocity to bullet
-    bulletVelocity += velocity;
+        // Add player velocity to bullet
+        bulletVelocity += velocity;
 
-    gameScene->addEntity(std::make_shared<Bullet>(sprite.getPosition(), bulletVelocity));
+        gameScene->addEntity(std::make_shared<Bullet>(sprite.getPosition(), bulletVelocity));
+    }
 }
 
 void Player::setupHitbox() {

@@ -18,7 +18,7 @@ public:
     void pushTiles(const std::vector<MapTile>& mapTiles);
     void buildMesh();
 
-    bool collides(const sf::FloatRect& bounds) const;
+    bool collides(const sf::FloatRect& bounds, std::vector<sf::FloatRect>& out) const;
 
     inline bool getDrawCollidables() const;
     inline void setDrawCollidables(bool draw);

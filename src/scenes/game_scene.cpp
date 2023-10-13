@@ -1,6 +1,9 @@
 #include "game_scene.h"
 #include "../world/map_builder.h"
 
+GameScene::GameScene()
+    : collisionManager(*this) {}
+
 void GameScene::setup() {
     map = MapBuilder()
               .loadFromFile("map/0.json")
